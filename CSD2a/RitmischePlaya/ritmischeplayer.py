@@ -22,7 +22,6 @@ BPM = int(BPM)
 BPM = 60000/BPM
 
 print(BPM)
-# for x in range(numPlaybackTimes) :
 
 for x in range(numPlaybackTimes) :
     noteLengthA = noteLengthR[x] * BPM
