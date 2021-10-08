@@ -31,26 +31,26 @@ def noteEvent(event):
 
 noteEvent(hihat)
 time.sleep(1)
+print("go")
+
 t0 = time.time()
 
-while len(HHts) > 0:
+while (len(HHts) > 0):
     t = time.time() - t0
-    if HHts:
+    if (len(HHts) > 0):
 
-        if(t >= Sts[0]*0.25):
+        if(len(Sts) > 0 and t >= Sts[0]*0.25):
             noteEvent(snare)
-            Sts.pop(0)
-            snare['timestamp'] = Sts[0]
-        if(t >= Kts[0]*0.25):
+            snare['timestamp'] = Sts.pop(0)
+        if(len(Kts) > 0 and t >= Kts[0]*0.25):
             noteEvent(kick)
-            Kts.pop(0)
-            kick['timestamp'] = Kts[0]
-        if(t >= HHts[0]*0.25):
+            kick['timestamp'] = Kts.pop(0)
+        if(len(HHts) > 0 and t >= HHts[0]*0.25):
             noteEvent(hihat)
-            HHts.pop(0)
-            hihat['timestamp'] = HHts[0]
+            hihat['timestamp'] = HHts.pop(0)
         time.sleep(0.0001)
     else:
         break
+
 time.sleep(1)
 print("klaar")
