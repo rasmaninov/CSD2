@@ -19,7 +19,7 @@ print(noteLengthR)
 
 BPM = input("wat is uw gewenste BPM? ")
 BPM = int(BPM)
-BPM = 60000/BPM
+BPM = 60/BPM
 
 print(BPM)
 
@@ -29,6 +29,6 @@ for x in range(numPlaybackTimes) :
 
     wave_obj = sa.WaveObject.from_wave_file("kick.wav")
     play_obj = wave_obj.play()
-    time.sleep(noteLengthA/1000)
+    time.sleep(noteLengthA)
 
 print("uitgespeeld")
