@@ -10,23 +10,29 @@ HHts =[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 Kts = [0,4,7,8,12]
 Sts = [2,6,10,14]
 
+events = []
+def createEventList():
+    for hat in HHts:
+        events.push({
+            'timestamp' : hat,
+            'instrument' : 'hihat'
+        })
 kick = {
-'timestamp' : [1],
-'instrument' : kick
+    'timestamp' : [1],
+    'instrument' : kick
 }
 
 snare = {
-'timestamp' : [1],
-'instrument' : snare
+    'timestamp' : [1],
+    'instrument' : snare
 }
 
 hihat = {
-'timestamp' : [0],
-'instrument' : hihat
+    'timestamp' : [0],
+    'instrument' : hihat
 }
 
 def noteEvent(event):
-
     event['instrument'].play()
 
 noteEvent(hihat)
@@ -38,7 +44,6 @@ t0 = time.time()
 while (len(HHts) > 0):
     t = time.time() - t0
     if (len(HHts) > 0):
-
         if(len(Sts) > 0 and t >= Sts[0]*0.25):
             noteEvent(snare)
             snare['timestamp'] = Sts.pop(0)
