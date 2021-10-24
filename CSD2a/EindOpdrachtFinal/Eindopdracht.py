@@ -3,11 +3,11 @@ import time as ti
 import numpy as np
 from midiutil import MIDIFile
 
-
-hihat = sa.WaveObject.from_wave_file("hihat.wav")
-snare = sa.WaveObject.from_wave_file("snare.wav")
-kick = sa.WaveObject.from_wave_file("kick.wav")
-
+samples = {
+    "hihat" : sa.WaveObject.from_wave_file("hihat.wav"),
+    "snare" : sa.WaveObject.from_wave_file("snare.wav"),
+    "kick" : sa.WaveObject.from_wave_file("kick.wav")
+}
 events = []
 events_saving = []
 hihat_timestamp = []
@@ -114,44 +114,19 @@ def get_timestamp(events):
 events.sort(key = get_timestamp)
 #making an extra list to for writing to midifile
 events_saving = events.copy()
-#define the noteevents
-def noteEvent(events):
-
-    if events['instrument'] == 'snare':
-        snare.play()
-
-    if events['instrument'] == 'kick':
-        kick.play()
-
-    if events['instrument'] == 'hihat':
-        hihat.play()
-#so it wil play correctly
-kick.play()
 #calibrating time
 t0 = ti.time()
 #play loop
-while len(events) > 0 :
+
+while events:
     t = ti.time() - t0
     if (t >= events[0].get('timestamp')):
-        if (events[0].get('instrument') == 'hihat'):
-            noteEvent({
-                'instrument':'hihat'
-            })
-            events.pop(0)
-        if (events[0].get('instrument') == 'kick'):
-            noteEvent({
-                'instrument':'kick'
-            })
-            events.pop(0)
-        if (events[0].get('instrument') == 'snare'):
-            noteEvent({
-                'instrument':'snare'
-            })
-            events.pop(0)
+        samples[events[0]['instrument']].play()
+        events.pop(0)
         ti.sleep(0.001)
 
 #writing loop to midi
-# create your midi object # Midi extraction made possible by docentjes
+#create your midi object # Midi extraction made possible by docentjes
 mf = MIDIFile(1)
 track = 0
 time = 0
@@ -164,32 +139,23 @@ while not valid_answer:
     try:
         save = str(input("do you want to save this loop? y/n: "))
         if (save == "y") :
-            while len(events_saving):
-                if (len(events_saving) > 0):
-
-                    if (len(events_saving) > 0 and events_saving[0].get('instrument') == 'hihat'):
-                        pitch = 42
-                        time = events_saving[0].get('timestamp') * 2
-                        duration = note_dur
-                        mf.addNote(track, channel, pitch, time, duration, volume)
-                        events_saving.pop(0)
-
-                    if (len(events_saving) > 0 and events_saving[0].get('instrument') == 'kick'):
-                        pitch = 36
-                        time = events_saving[0].get('timestamp') * 2
-                        duration = note_dur
-                        mf.addNote(track, channel, pitch, time, duration, volume)
-                        events_saving.pop(0)
-
-                    if (len(events_saving) > 0 and events_saving[0].get('instrument') == 'snare'):
-                        pitch = 38
-                        time = events_saving[0].get('timestamp') * 2
-                        duration = note_dur
-                        mf.addNote(track, channel, pitch, time, duration, volume)
-                        events_saving.pop(0)
-                else:
-
-                    break
+            while len(events_saving) > 0:
+                if (events_saving[0].get('instrument') == 'hihat'):
+                    pitch = 42
+                    time = events_saving[0].get('timestamp') * 2
+                    duration = note_dur
+                    mf.addNote(track, channel, pitch, time, duration, volume)
+                if (events_saving[0].get('instrument') == 'kick'):
+                    pitch = 36
+                    time = events_saving[0].get('timestamp') * 2
+                    duration = note_dur
+                    mf.addNote(track, channel, pitch, time, duration, volume)
+                if (events_saving[0].get('instrument') == 'snare'):
+                    pitch = 38
+                    time = events_saving[0].get('timestamp') * 2
+                    duration = note_dur
+                    mf.addNote(track, channel, pitch, time, duration, volume)
+                events_saving.pop(0)
             with open("mysong.mid",'wb') as outf:
                 mf.writeFile(outf)
             print("done, loop saved")
