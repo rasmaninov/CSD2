@@ -154,7 +154,7 @@ while len(events):
     else:
 
         break
-        
+
 #writing loop to midi
 # create your midi object # Midi extraction made possible by docentjes
 mf = MIDIFile(1)
@@ -192,16 +192,16 @@ while not valid_answer:
                         duration = note_dur
                         mf.addNote(track, channel, pitch, time, duration, volume)
                         events_saving.pop(0)
-                    ti.sleep(0.001)
                 else:
 
                     break
-            ti.sleep(0.5)
             with open("mysong.mid",'wb') as outf:
                 mf.writeFile(outf)
             print("done, loop saved")
+            break
         elif (save == "n"):
             print('done, loop is deleted')
+            break
         elif not (save == "y") or (save == "n"):
             print("wrong input")
             continue
