@@ -130,30 +130,25 @@ kick.play()
 #calibrating time
 t0 = ti.time()
 #play loop
-while len(events):
+while len(events) > 0 :
     t = ti.time() - t0
-
-    if (len(events) > 0):
-
-        if (len(events) > 0 and t >= events[0].get('timestamp') and events[0].get('instrument') == 'hihat'):
+    if (t >= events[0].get('timestamp')):
+        if (events[0].get('instrument') == 'hihat'):
             noteEvent({
                 'instrument':'hihat'
             })
             events.pop(0)
-        if (len(events) > 0 and t >= events[0].get('timestamp') and events[0].get('instrument') == 'kick'):
+        if (events[0].get('instrument') == 'kick'):
             noteEvent({
                 'instrument':'kick'
             })
             events.pop(0)
-        if (len(events) > 0 and t >= events[0].get('timestamp') and events[0].get('instrument') == 'snare'):
+        if (events[0].get('instrument') == 'snare'):
             noteEvent({
                 'instrument':'snare'
             })
             events.pop(0)
         ti.sleep(0.001)
-    else:
-
-        break
 
 #writing loop to midi
 # create your midi object # Midi extraction made possible by docentjes
