@@ -1,19 +1,21 @@
 import simpleaudio as sa
-import time
+import time as ti
 import numpy as np
+from midiutil import MIDIFile
 
 hihat = sa.WaveObject.from_wave_file("hihat.wav")
 snare = sa.WaveObject.from_wave_file("snare.wav")
 kick = sa.WaveObject.from_wave_file("kick.wav")
 
 events = []
+events_saving = []
 hihat_timestamp = []
 kick_timestamp  = []
 snare_timestamp = []
 
-bar_dur = 3.5  # 1 = 1/4 note
-note_dur = 0.125 # 1/16 note in ms
-base_length = int(bar_dur*4*4) #length of sequence in amount of 16th notes (sequence is 4 bars long)
+bar_dur = 4.0  # 1 = 1/4 note for a 4/4
+note_dur = 0.125 # 1/16 note in s
+base_length = 64 #length of sequence in amount of 16th notes (sequence is 4 bars long)
 base_sequence = 0
 base_durations = [] #timestamps of every 16th note
 current_time = 0  #used for determing base_durations
@@ -37,9 +39,7 @@ while not valid_BPM:
         valid_BPM = True
     else:
         print('Error boy, out of BPM Bounds')
-
-note_dur = (60/BPM) * 0.25
-
+note_dur = ((60/BPM)/4)
 #creating bounds for timesignature
 while not valid_timesig_1 and not valid_timesig_2:
     try:
@@ -55,18 +55,14 @@ while not valid_timesig_1 and not valid_timesig_2:
         valid_timesig_2 = True
     else:
         print('Error boy, out of Bounds')
-
 #going from timesignature to bar_dur
 calc = timesig_2 / 4
 bar_dur = timesig_1 / calc
+base_length = int(bar_dur*4*4)
 
 for x in range(base_length):
-
     base_durations.append(current_time)
     current_time = current_time + note_dur
-
-print(base_durations)
-
 for x in range(base_length):
     if x < base_length:
         chance = np.random.choice([1,2,3,4,5,6,7], p = [0.25, 0.1, 0.1, 0.1, 0.05, 0.1, 0.3])
@@ -87,7 +83,6 @@ for x in range(base_length):
 
     else:
         break
-
 # create events and play sequence
 def createEventList():
     for hat in hihat_timestamp:
@@ -105,14 +100,15 @@ def createEventList():
             'timestamp' : snare,
             'instrument' : 'snare'
         })
-
-
 createEventList()
 
 def get_timestamp(events):
     return events.get('timestamp')
 events.sort(key =get_timestamp)
 
+events_saving = events.copy()
+print(events)
+print(events_saving)
 def noteEvent(events):
 
     if events['instrument'] == 'snare':
@@ -125,10 +121,18 @@ def noteEvent(events):
         hihat.play()
 kick.play()
 
-t0 = time.time()
-
+t0 = ti.time()
+# create your midi object # Midi extraction made possible by docentjes
+mf = MIDIFile(1)
+track = 0
+time = 0
+mf.addTrackName(0,0, "Drums")
+mf.addTempo(0,0,BPM)
+channel = 0
+volume = 60
+#play loop
 while len(events):
-    t = time.time() - t0
+    t = ti.time() - t0
 
     if (len(events) > 0):
 
@@ -147,10 +151,45 @@ while len(events):
                 'instrument':'snare'
             })
             events.pop(0)
-        time.sleep(0.01)
+        ti.sleep(0.001)
     else:
 
         break
+ti.sleep(0.5)
 
-time.sleep(2)
-print("klaar")
+save = input("do you want to save this loop? y/n: ")
+
+if (save == "y") :
+    while len(events_saving):
+        if (len(events_saving) > 0):
+
+            if (len(events_saving) > 0 and events_saving[0].get('instrument') == 'hihat'):
+                pitch = 42
+                time = events_saving[0].get('timestamp') * 2
+                duration = note_dur
+                mf.addNote(track, channel, pitch, time, duration, volume)
+                events_saving.pop(0)
+
+            if (len(events_saving) > 0 and events_saving[0].get('instrument') == 'kick'):
+                pitch = 36
+                time = events_saving[0].get('timestamp') * 2
+                duration = note_dur
+                mf.addNote(track, channel, pitch, time, duration, volume)
+                events_saving.pop(0)
+
+            if (len(events_saving) > 0 and events_saving[0].get('instrument') == 'snare'):
+                pitch = 38
+                time = events_saving[0].get('timestamp') * 2
+                duration = note_dur
+                mf.addNote(track, channel, pitch, time, duration, volume)
+                events_saving.pop(0)
+            ti.sleep(0.001)
+        else:
+
+            break
+    ti.sleep(0.5)
+    with open("mysong.mid",'wb') as outf:
+        mf.writeFile(outf)
+    print("done, loop saved")
+else:
+    print('done, loop is deleted')
