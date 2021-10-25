@@ -77,7 +77,7 @@ while running:
     #create sequence based on weighted chance
     for x in range(base_length):
         if (x < base_length and x == 0 or x % 2 == 0):
-            chance = np.random.choice([1,2,3,4,5,6,7], p = [0.2, 0.1, 0.1, 0.05, 0.1, 0.25, 0.2])
+            chance = np.random.choice([1,2,3,4,5,6,7], p = [0.25, 0.05, 0.1, 0.05, 0.1, 0.25, 0.2])
             if (chance == 1):
                 hihat_timestamp.append(base_durations[x])
             if (chance == 2):
@@ -93,8 +93,14 @@ while running:
             if (chance == 6):
                 hihat_timestamp.append(base_durations[x])
                 kick_timestamp.append(base_durations[x])
+        elif (x < base_length and x == 4 or x % 8 == 0):
+            chance = np.random.choice([1,2,3], p = [0.5,0.2,0.3])
+            if (chance == 1):
+                snare_timestamp.append(base_durations[x])
+            if (chance == 2):
+                kick_timestamp.append(base_durations[x])
         elif (x < base_length and x == 1 or x % 1 == 0 ):
-            chance = np.random.choice([1,2,3,4,5,6,7], p = [0.15, 0.0, 0.1, 0.05, 0.1, 0.1, 0.5])
+            chance = np.random.choice([1,2,3,4,5,6,7], p = [0.15, 0.0, 0.05, 0.05, 0.1, 0.1, 0.55])
             if (chance == 1):
                 hihat_timestamp.append(base_durations[x])
             if (chance == 2):
