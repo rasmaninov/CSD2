@@ -43,7 +43,7 @@ while running:
         except ValueError:
             print("This is not a correct number")
             continue
-        if BPM <= 400 and BPM >= 20:
+        if BPM <= 400 and BPM >= 20: #checking min and max bpm
             note_dur = ((60/BPM)/4)
             print(note_dur)
             valid_BPM = True
@@ -76,8 +76,8 @@ while running:
         current_time = current_time + note_dur
     #create sequence based on weighted chance
     for x in range(base_length):
-        if (x < base_length and x == 0 or x % 2 == 0):
-            chance = np.random.choice([1,2,3,4,5,6,7], p = [0.25, 0.05, 0.1, 0.05, 0.1, 0.25, 0.2])
+        if (x < base_length and x == 0 or x % 2 == 0): #if even 16th, these are chances
+            chance = np.random.choice([1,2,3,4,5,6,7], p = [0.25, 0.15, 0.1, 0.05, 0.1, 0.15, 0.2])
             if (chance == 1):
                 hihat_timestamp.append(base_durations[x])
             if (chance == 2):
@@ -93,13 +93,13 @@ while running:
             if (chance == 6):
                 hihat_timestamp.append(base_durations[x])
                 kick_timestamp.append(base_durations[x])
-        elif (x < base_length and x == 4 or x % 8 == 0):
+        elif (x < base_length and x == 4 or x % 8 == 0): #if 1/4 these are chances
             chance = np.random.choice([1,2,3], p = [0.5,0.2,0.3])
             if (chance == 1):
                 snare_timestamp.append(base_durations[x])
             if (chance == 2):
                 kick_timestamp.append(base_durations[x])
-        elif (x < base_length and x == 1 or x % 1 == 0 ):
+        elif (x < base_length and x == 1 or x % 1 == 0 ): # if uneven 16th these are chances
             chance = np.random.choice([1,2,3,4,5,6,7], p = [0.15, 0.0, 0.05, 0.05, 0.1, 0.1, 0.55])
             if (chance == 1):
                 hihat_timestamp.append(base_durations[x])
@@ -170,11 +170,11 @@ while running:
         try:
             save = str(input("do you want to save this loop? y/n: "))
 
-            if (save == "y") :
+            if (save == "y") : # if yes, save as midi # midisaving thanks to 6_writemidi
                 name = input("what to call the file bro :")
-                name = name + ".mid"
+                name = name + "-" + str(BPM) + ".mid"
                 while events_saving:
-                    time = events_saving[0].get('timestamp') * 2
+                    time = events_saving[0].get('timestamp') * (BPM/120) * 2 #calculating note duration
                     pitch = int(events_saving[0].get('pitch'))
                     mf.addNote(track, channel, pitch, time, duration, volume)
                     events_saving.pop(0)
@@ -182,10 +182,10 @@ while running:
                     mf.writeFile(outf)
                 print("done, loop saved")
                 valid_answer = True
-            elif (save == "n"):
+            elif (save == "n"): #if no, continue without saving
                 print('done, deleted loop')
                 valid_answer = True
-            elif not (save == "y") or (save == "n"):
+            elif not (save == "y") or (save == "n"): #if wrong, ask again
                 print("wrong input")
                 continue
 
@@ -196,20 +196,20 @@ while running:
         try:
             runner = str(input("keep going? y/n : "))
 
-            if (runner == "y" ) :
+            if (runner == "y" ) : # if yes, then start over
                 print("let's gooooooo")
                 running = True
                 valid_answer1 = True
-            elif (runner == "n") :
+            elif (runner == "n") : # if no, end program
                 print("RIP")
                 running = False
                 valid_answer1 = True
                 ti.sleep(1)
-            elif not (runner == "y" ) or (runner == "n"):
+            elif not (runner == "y" ) or (runner == "n"): # if wrong, ask again
                 print("wrong input, y/n")
                 valid_answer1 = False
                 continue
-        except ValueError:
+        except ValueError: # if wrong, ask again
             print("Wrong input, ")
 print('bye ;_;')
 ti.sleep(2)
