@@ -59,7 +59,7 @@ while running:
             print('wrong input')
             continue
         #checking if second half of signature is a power of 2 and if first half is between 1 and 16
-        if timesig_1 <= 16 and timesig_1>= 1 and (timesig_2 & timesig_2-1) == 0 and timesig_2 > 1:
+        if timesig_1 <= 16 and timesig_1>= 1 and (timesig_2 & timesig_2-1) == 0 or time_sig2 == 1 and timesig_2 > 1:
             print(timesig_1, "/", timesig_2)
             valid_timesig_1 = True
             valid_timesig_2 = True
@@ -69,7 +69,7 @@ while running:
     calc = timesig_2 / 4
     bar_dur = timesig_1 / calc
     #going from 1 bar to 4 bars and back to total number of 16th notes
-    base_length = int(bar_dur*4*4)
+    base_length = int(bar_dur*4)
     #creating timestamps for every 16th note in loop
     for x in range(base_length):
         base_durations.append(current_time)
