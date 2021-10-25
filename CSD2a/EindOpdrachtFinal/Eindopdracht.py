@@ -32,14 +32,16 @@ while running:
     valid_timesig_1 = False
     valid_timesig_2 = False
     valid_answer = False
+    valid_answer1 = False
 
 
     #creating bounds for bpm
+    #creating note_duration from bpm in seconds per 16th note
     while not valid_BPM:
         try:
             BPM = int(input("What BPM do you want? 20-400 : "))
         except ValueError:
-            print("This is not a number")
+            print("This is not a correct number")
             continue
         if BPM <= 400 and BPM >= 20:
             note_dur = ((60/BPM)/4)
@@ -47,8 +49,6 @@ while running:
             valid_BPM = True
         else:
             print('out of Bounds. 20-400 BPM')
-    #creating note duration from bpm in seconds per 16th note
-
     #creating bounds for timesignature
     while not valid_timesig_1 and not valid_timesig_2:
         try:
@@ -64,7 +64,7 @@ while running:
             valid_timesig_1 = True
             valid_timesig_2 = True
         else:
-            print('out of Bounds')
+            print('out of bounds, first half must be 1-16, second half a power of 2')
     #going from timesignature to the total duration of 1 bar in 1/4 note value
     calc = timesig_2 / 4
     bar_dur = timesig_1 / calc
@@ -118,7 +118,8 @@ while running:
                 kick_timestamp.append(base_durations[x])
         else:
             break
-    # create sequencable events list
+    # create sequencable events list, giving em a timestamp,
+    # an instrument name and a pitch to write to midi
     def createEventList():
         for hat in hihat_timestamp:
             events.append({
@@ -147,14 +148,13 @@ while running:
     events_saving = events.copy()
     #calibrating time
     t0 = ti.time()
-    #play loop
+    #play loop #format van deze loop thanks to ciska
     while events:
         t = ti.time() - t0
         if (t >= events[0].get('timestamp')):
             samples[events[0]['instrument']].play()
             events.pop(0)
             ti.sleep(0.001)
-
     #writing loop to midi
     #create your midi object # Midi extraction made possible by docentjes
     mf = MIDIFile(1)
@@ -192,17 +192,24 @@ while running:
         except ValueError:
             print("wrong input")
     #looping entire loopbuildingsequence
-    try:
-        runner = str(input("keep going? y/n :"))
-        if (runner == "y" ) :
-            running = True
-        elif (runner == "n") :
-            running = False
-            ti.sleep(1)
-        elif not (runner == "y" ) or (runner == "n"):
-            print("wrong input")
-            continue
-    except :
-        print("wrong input")
+    while not valid_answer1 :
+        try:
+            runner = str(input("keep going? y/n : "))
+
+            if (runner == "y" ) :
+                print("let's gooooooo")
+                running = True
+                valid_answer1 = True
+            elif (runner == "n") :
+                print("RIP")
+                running = False
+                valid_answer1 = True
+                ti.sleep(1)
+            elif not (runner == "y" ) or (runner == "n"):
+                print("wrong input, y/n")
+                valid_answer1 = False
+                continue
+        except ValueError:
+            print("Wrong input, ")
 print('bye ;_;')
 ti.sleep(2)
