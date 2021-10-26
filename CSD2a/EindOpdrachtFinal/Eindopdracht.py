@@ -172,7 +172,7 @@ while running:
 
             if (save == "y") : # if yes, save as midi # midisaving thanks to 6_writemidi
                 name = input("what to call the file bro :")
-                name = name + "-" + str(BPM) + "-"+ drums + ".mid"
+                name = name + "-" + str(BPM) + "-"+ "drums" + ".mid"
                 mf.addTrackName(0,0, name)
                 while events_saving:
                     time = events_saving[0].get('timestamp') * (BPM/120) * 2 #calculating note duration
