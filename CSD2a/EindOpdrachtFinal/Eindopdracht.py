@@ -59,7 +59,7 @@ while running:
             print('wrong input')
             continue
         #checking if second half of signature is a power of 2 and if first half is between 1 and 16
-        if timesig_1 <= 16 and timesig_1>= 1 and (timesig_2 & timesig_2-1) == 0 or time_sig2 == 1 and timesig_2 > 1:
+        if timesig_1 <= 16 and timesig_1>= 1 and (timesig_2 & timesig_2-1) == 0 or timesig_2 == 1 and timesig_2 > 1:
             print(timesig_1, "/", timesig_2)
             valid_timesig_1 = True
             valid_timesig_2 = True
@@ -172,7 +172,7 @@ while running:
 
             if (save == "y") : # if yes, save as midi # midisaving thanks to 6_writemidi
                 name = input("what to call the file bro :")
-                name = name + "-" + str(BPM) + "-"+ "drums" + ".mid"
+                name = name + "-" + str(BPM) + "-" + "drums" + ".mid"
                 mf.addTrackName(0,0, name)
                 while events_saving:
                     time = events_saving[0].get('timestamp') * (BPM/120) * 2 #calculating note duration
