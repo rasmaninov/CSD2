@@ -160,7 +160,7 @@ while running:
     mf = MIDIFile(1)
     track = 0
     time = 0
-    mf.addTrackName(0,0, "Drums")
+
     mf.addTempo(0,0,BPM)
     channel = 0
     volume = 60
@@ -173,6 +173,7 @@ while running:
             if (save == "y") : # if yes, save as midi # midisaving thanks to 6_writemidi
                 name = input("what to call the file bro :")
                 name = name + "-" + str(BPM) + ".mid"
+                mf.addTrackName(0,0, name)
                 while events_saving:
                     time = events_saving[0].get('timestamp') * (BPM/120) * 2 #calculating note duration
                     pitch = int(events_saving[0].get('pitch'))
