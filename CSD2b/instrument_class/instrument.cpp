@@ -2,17 +2,17 @@
 
 class Instrument {
   public:
-    Instrument();
+    Instrument(std::string _sound);
     ~Instrument();
     void play();
     std::string sound;
 };
 
-Instrument::Instrument(){
-  sound = "Ratatataaaa";
+Instrument::Instrument(std::string _sound){
+  sound = _sound;
 }
 Instrument::~Instrument(){
-  std::cout <<"klaar"<<std::endl;
+  std::cout << "klaar" <<std::endl;
 }
 void Instrument::play(){
   std::cout << sound << std::endl;
@@ -20,9 +20,6 @@ void Instrument::play(){
 
 int main()
 {
-  Instrument pipa; //create object
-  Instrument boom;
-  boom.sound = "biem";
+  Instrument pipa("biem");
   pipa.play();
-  boom.play();
 }
