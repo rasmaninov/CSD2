@@ -13,8 +13,8 @@ Guitar::~Guitar()
 
 void Guitar::play(int style, int tone)
 {
-  std::cout << "pitch is " << pitch << ". Pitch range guitar is E2 - E6" << std::endl;
-  std::cout << "the style is " << style << std::endl;
-  std::cout << "tone is " << tone << std::endl;
-  std::cout << "grwohaaa" << std::endl;
+  std::cout << "Pitch is " << pitch << ". Pitch range guitar is E2 - E6" << std::endl;
+  std::cout << "The style is " << style << std::endl;
+  std::cout << "Tone is " << tone << std::endl;
+  std::cout << "Grwohaaa" << std::endl;
 }

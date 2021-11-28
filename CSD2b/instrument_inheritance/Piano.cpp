@@ -13,7 +13,7 @@ Piano::~Piano()
 
 void Piano::play(int sustain, int damper)
 {
-  std::cout << "pitch is " << pitch << ". Pitch range for piano is A0 - C8" << std::endl;
+  std::cout << "Pitch is " << pitch << ". Pitch range for piano is A0 - C8" << std::endl;
   std::cout << "Damper pedal is " << damper << std::endl;
   std::cout << "Sustain pedal is " << sustain << std::endl;
   std::cout << "Pliiiiiiiiiing" << std::endl;
