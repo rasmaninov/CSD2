@@ -1,5 +1,5 @@
 #!/bin/bash
 
-g++ -c instrument.cpp
+g++ -c synth.cpp
 g++ -c main.cpp
-g++ -o instrument instrument.o main.o
+g++ -o instrument synth.o main.o
