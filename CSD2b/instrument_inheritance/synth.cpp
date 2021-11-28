@@ -11,6 +11,8 @@ Synth::~Synth(){
 
 void Synth::play(int filt, int amp)
 {
-  std::cout << filt << " filter frequency" << std::endl;
-  std::cout << amp << " amp" << std::endl;
+  std::cout << "pitch is " << pitch << ". Pitch range for synth is E0 - E6" << std::endl;
+  std::cout << "Filter frequency is " << filt << " Khz" << std::endl;
+  std::cout <<  "Amplitude is : " << amp << std::endl;
+  std::cout << "WUuuhaooaaaaah" << std::endl;
 }
