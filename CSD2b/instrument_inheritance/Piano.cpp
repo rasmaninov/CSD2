@@ -1,9 +1,9 @@
 #include "Piano.h"
 #include <iostream>
 
-Piano::Piano(std::string pitch) : Instrument(pitch)
+Piano::Piano(std::string pitch, std::string name) : Instrument(pitch, name)
 {
-  std::cout << "constructor Piano called " << std::endl;
+  std::cout << "constructor " << name << " called " << std::endl;
 }
 
 Piano::~Piano()

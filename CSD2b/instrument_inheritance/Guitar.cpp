@@ -1,20 +1,19 @@
 #include "Guitar.h"
 #include <iostream>
 
-Guitar::Guitar(std::string pitch) : Instrument(pitch)
+Guitar::Guitar(std::string pitch, std::string name) : Instrument(pitch, name)
 {
-  std::cout << "constructor Guitar called" << std::endl;
+  std::cout << "constructor " << name << " called " << std::endl;
 }
 
 Guitar::~Guitar()
 {
-  std::cout << "deconstructor guitar called" << std::endl;
+  std::cout << "deconstructor "<< name << " called" << std::endl;
 }
 
 void Guitar::play(int style, int tone)
 {
-  std::cout << "Pitch is " << pitch << ". Pitch range guitar is E2 - E6" << std::endl;
-  std::cout << "The style is " << style << std::endl;
-  std::cout << "Tone is " << tone << std::endl;
+  std::cout << "Pitch is " << pitch << ". Pitch range guitar is E2 - E6, "
+  << "the style is " << style  << ", tone is " << tone << std::endl;
   std::cout << "Grwohaaa" << std::endl;
 }

@@ -4,7 +4,7 @@
 class Piano : public Instrument
 {
 public:
-  Piano(std::string pitch);
+  Piano(std::string pitch, std::string name);
   ~Piano();
 
   void play(int sustain, int damper);

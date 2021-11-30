@@ -1,8 +1,9 @@
 #include "instrument.h"
 
-Instrument::Instrument(std::string pitch){
+Instrument::Instrument(std::string pitch, std::string name){
   std::cout << "Constructor called " << std::endl;
  this->pitch = pitch;
+ this-> name = name;
 
 }
 
