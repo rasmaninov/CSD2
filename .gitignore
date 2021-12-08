@@ -3,4 +3,8 @@
 *.pages
 *.o
 *.asd
+instrument
+oscillator
+*.pdf
+*.drawio
 /LESVOORBEELDEN
