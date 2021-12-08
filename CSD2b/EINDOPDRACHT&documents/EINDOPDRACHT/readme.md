@@ -18,3 +18,5 @@ EXTRA
 
 #todo for 14/12
 Osc. Sine. Saw. Square. Synth base. Synth sub *2
+
+2 uur 8/12
