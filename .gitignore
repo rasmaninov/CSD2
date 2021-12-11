@@ -5,6 +5,7 @@
 *.asd
 instrument
 oscillator
+example
 *.pdf
 *.drawio
 /LESVOORBEELDEN
