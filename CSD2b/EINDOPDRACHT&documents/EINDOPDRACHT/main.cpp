@@ -4,7 +4,9 @@
 #include "math.h"
 #include "square.h"
 #include "saw.h"
+#include "writeToFile.h"
 
+#define WRITE_TO_FILE 0
 
 int main(int argc,char **argv)
 {
@@ -15,16 +17,25 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
   // Sine sine(220, samplerate);
-  Square square(220, samplerate);
+  Saw saw(220, samplerate);
+
+#if WRITE_TO_FILE
+    WriteToFile fileWriter("output.csv", true);
+
+    for(int i = 0; i < 500; i++) {
+      fileWriter.write(std::to_string(saw.getSample()) + "\n");
+      saw.tick();
+    }
+#else
 
   float amplitude = 0.15;
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&square, &amplitude](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&saw, &amplitude](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = square.getSample() * amplitude;
-      square.tick();
+      outBuf[i] = saw.getSample() * amplitude;
+      saw.tick();
     }
     amplitude = 0.5;
     return 0;
@@ -45,7 +56,7 @@ int main(int argc,char **argv)
         break;
     }
   }
-
+  #endif
   //end the program
   return 0;
 } // main()
