@@ -1,8 +1,8 @@
 #include "sine.h"
 #include "math.h"
 
-Sine::Sine(double frequency, double samplerate) : frequency(frequency),
-amplitude(1.0), phase(0), sample(0), samplerate(samplerate)
+Sine::Sine(double frequency, double samplerate) : Oscillator(frequency, samplerate,
+ phase, sample, amplitude)
 {
   std::cout << "constructor Sine called" << std::endl;
 }

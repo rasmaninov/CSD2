@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-
-class Sine
+#include "oscillator.h"
+class Sine : public Oscillator
 {
 public:
   Sine(double frequency, double samplerate);
@@ -14,11 +14,4 @@ public:
 
   void setFrequency(float frequency);
   float getFrequency();
-  // Tick();
-private:
-  double frequency;
-  double amplitude;
-  double phase;
-  double sample;
-  double samplerate;
 };
