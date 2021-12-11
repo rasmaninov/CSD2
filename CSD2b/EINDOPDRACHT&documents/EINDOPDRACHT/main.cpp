@@ -3,6 +3,7 @@
 #include <iostream>
 #include "math.h"
 #include "square.h"
+#include "saw.h"
 
 
 int main(int argc,char **argv)
