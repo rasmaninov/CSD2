@@ -3,6 +3,8 @@
 *.pages
 *.o
 *.asd
+*.csv
+*.png
 Instrument
 instrument
 oscillator
