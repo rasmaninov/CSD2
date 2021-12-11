@@ -3,6 +3,7 @@
 *.pages
 *.o
 *.asd
+Instrument
 instrument
 oscillator
 example
