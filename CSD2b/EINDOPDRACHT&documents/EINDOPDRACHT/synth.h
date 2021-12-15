@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "sine.h"
+#include <math.h>
 
 class Synth
 {

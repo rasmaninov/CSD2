@@ -19,7 +19,7 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
   // Sine sine(220, samplerate);
-  Synth sine(800, samplerate);
+  Synth sine(70, samplerate);
 
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
@@ -30,7 +30,7 @@ int main(int argc,char **argv)
     }
 #else
 
-  float amplitude = 0.15;
+  float amplitude = 0.1;
   //assign a function to the JackModule::onProces
   jack.onProcess = [&sine, &amplitude](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
@@ -39,7 +39,7 @@ int main(int argc,char **argv)
       outBuf[i] = sine.getSample() * amplitude;
       sine.tick();
     }
-    amplitude = 0.5;
+    amplitude = 0.2;
     return 0;
   };
 
