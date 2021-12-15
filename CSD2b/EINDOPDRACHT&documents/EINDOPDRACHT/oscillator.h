@@ -4,12 +4,24 @@
 class Oscillator
 {
 public:
-  Oscillator();
-  Oscillator(double frequency, double samplerate , double phase , double sample , double amplitude);
+  Oscillator(double _frequency, double _samplerate);
   ~Oscillator();
-  // Initialize(double phase, double sample, double amplitude);
+
+  void initialize(double samplerate);
+
+  // go to next sample
+  void tick();
+
+  // setters and getters
+  // return the current sample
+  double getSample();
+
+  //getters and setters
+  void setFrequency(double frequency);
+  double getFrequency();
 
 protected:
+  virtual void calcNextSample() = 0;
   double phase;
   double sample;
   double samplerate;

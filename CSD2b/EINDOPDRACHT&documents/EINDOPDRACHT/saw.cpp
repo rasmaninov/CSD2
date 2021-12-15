@@ -15,9 +15,6 @@ float Saw::getSample() {
   return sample;
 }
 
-// void Saw::calculate(){
-//
-// }
 
 void Saw::tick(){
   phase += frequency / samplerate;

@@ -1,24 +1,38 @@
 #include "oscillator.h"
 
-
-Oscillator::Oscillator() : Oscillator() {}
-
-Oscillator::Oscillator(double frequency, double samplerate , double phase , double sample , double amplitude){
+Oscillator::Oscillator(double frequency, double samplerate) :
+  phase(0), sample(0), amplitude(1.0) {
+  this -> frequency = frequency;
+  this -> samplerate = samplerate;
   std::cout << "constructor oscillator called" << std::endl;
-  this -> frequency;
-  this -> samplerate;
-  this -> phase;
-  this -> amplitude;
-  this -> sample;
+
 }
 
 Oscillator::~Oscillator(){
   std::cout << "deconstructor oscillator called" << std::endl;
 
 }
-  Oscillator::Oscillator(){}
-// Oscillator::Initialize(double phase, double sample, double amplitude){
-//   this -> phase = 0;
-//   this -> amplitude = 0;
-//   this -> samplerate = 0;
-// }
+
+void Oscillator::initialize(double samplerate){
+  this->samplerate=samplerate;
+}
+
+double Oscillator::getSample(){
+  return sample;
+}
+
+void Oscillator::tick() {
+  phase += frequency / samplerate;
+
+  if(phase > 1) phase -= 1.0;
+
+  calcNextSample();
+}
+
+void Oscillator::setFrequency(double frequency) {
+  this-> frequency = frequency;
+}
+
+double Oscillator::getFrequency() {
+  return frequency;
+}
