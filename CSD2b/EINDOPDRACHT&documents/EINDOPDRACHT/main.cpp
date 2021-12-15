@@ -6,6 +6,7 @@
 #include "saw.h"
 #include "writeToFile.h"
 #include "synth.h"
+#include "simplesynth.h"
 
 
 #define WRITE_TO_FILE 0
@@ -18,8 +19,8 @@ int main(int argc,char **argv)
   // init the jack, use program name as JACK client name
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
-  // Sine sine(220, samplerate);
-  Synth sine(70, samplerate);
+  // Sine sine(440, samplerate);
+  Simple sine(81, samplerate);
 
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);

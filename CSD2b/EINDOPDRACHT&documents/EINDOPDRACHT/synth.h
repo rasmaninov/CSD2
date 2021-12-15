@@ -12,10 +12,13 @@ public:
   void tick();
   // setters and getters
   // return the current sample
+
+
   double getSample();
   void setMidiPitch(float pitch);
 
 protected:
+  virtual void calculate() = 0;
   float midiPitch;
   // returns a frequency
   double mtof(float pitch);

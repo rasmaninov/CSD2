@@ -2,36 +2,37 @@
 
 Synth::Synth(float midiPitch, double samplerate) : sample(0)
 {
+  std::cout << "Con Synth" << std::endl;
   sine.initialize(samplerate);
   setMidiPitch(midiPitch);
 
 }
 
-Synth::~Synth() {}
-
-void Synth::tick()
-{
-  sine.tick();
-  sample = sine.getSample();
+Synth::~Synth() {
+  std::cout << "Decon Synth" << std::endl;
 }
 
-double Synth::getSample()
-{
+void Synth::tick(){
+  sine.tick();
+  sample = sine.getSample();
+  calculate();
+}
+
+
+double Synth::getSample(){
   return sample;
 }
 
-void Synth::setMidiPitch(float pitch)
-{
-  // TODO check if pitch is different
-  // TODO - check if pitch is in range
+void Synth::setMidiPitch(float pitch){
+
   midiPitch = pitch;
 
   double freq = mtof(midiPitch);
-  std::cout << freq << std::endl;
   sine.setFrequency(freq);
 }
-//fm  =  2(m−69)/12(440 Hz)
-double Synth::mtof(float pitch)
-{
+
+double Synth::mtof(float pitch){
   return pow(2.0, (pitch - 69.0)/12.0) * 440;
 }
+
+void calculate () {}
