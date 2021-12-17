@@ -1,14 +1,17 @@
 #pragma once
 #include "synth.h"
+#include "saw.h"
 
-class Simple : public Synth {
+
+class Complex : public Synth {
 public:
-  Simple();
-  Simple(float midiPitch, double samplerate);
-  ~Simple();
-  calculate();
+  Complex();
+  Complex(float midiPitch, double samplerate);
+  ~Complex();
 
 
-// private:
 
+private:
+  void calculate() override;
+  Saw Saw();
 };

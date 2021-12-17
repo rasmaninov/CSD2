@@ -1,15 +1,16 @@
-#include "simplesynth.h"
+#include "complex.h"
 
-Simple::Simple() : Simple(0,0) {}
+Complex::Complex() : Complex(0,0) {}
 
-Simple::Simple(float midiPitch, double samplerate) : Synth(midiPitch, samplerate) {
-std::cout << "con Simple" << std::endl;
+Complex::Complex(float midiPitch, double samplerate) : Synth(midiPitch, samplerate) {
+std::cout << "con Complex" << std::endl;
 }
 
-Simple::~Simple() {
-std::cout << "decon Simple" << std::endl;
+Complex::~Complex() {
+std::cout << "decon Complex" << std::endl;
 }
 
-Simple::calculate(){
+
+void Complex::calculate(){
 
 }

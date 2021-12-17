@@ -1,24 +1,14 @@
 #pragma once
 #include <iostream>
+#include "oscillator.h"
 
-class Saw
+class Saw : public Oscillator
 {
 public:
+  Saw();
   Saw(double frequency, double samplerate);
   ~Saw();
 
-  // void calculate();
-  float getSample();
-
-  void tick();
-
-  void setFrequency(float frequency);
-  float getFrequency();
-  // Tick();
 private:
-  double frequency;
-  double amplitude;
-  double phase;
-  double sample;
-  double samplerate;
+    void calcNextSample() override;
 };

@@ -27,6 +27,7 @@ void Oscillator::tick() {
   if(phase > 1) phase -= 1.0;
 
   calcNextSample();
+  sample *= amplitude;
 }
 
 void Oscillator::setFrequency(double frequency) {
