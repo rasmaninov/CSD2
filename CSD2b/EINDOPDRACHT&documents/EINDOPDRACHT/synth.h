@@ -3,6 +3,7 @@
 #include "oscillator.h"
 #include <math.h>
 #include "sine.h"
+#include "saw.h"
 
 
 class Synth

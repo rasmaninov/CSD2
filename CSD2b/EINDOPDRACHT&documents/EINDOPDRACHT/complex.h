@@ -1,7 +1,7 @@
 #pragma once
 #include "synth.h"
 #include "saw.h"
-
+#include "square.h"
 
 class Complex : public Synth {
 public:
@@ -14,5 +14,6 @@ public:
 private:
   void calculate() override;
   void updateFreq(double freq) override;
-  Saw Saw();
+  Saw saw;
+  // Square square;
 };

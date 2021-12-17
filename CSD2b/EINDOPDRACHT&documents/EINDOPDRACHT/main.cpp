@@ -21,7 +21,7 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
   // Sine sine(440, samplerate);
-  Simple synth(60, samplerate);
+  Complex synth(60, samplerate);
 
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);

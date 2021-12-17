@@ -6,11 +6,11 @@ Saw::Saw() : Saw(0,0) {}
 Saw::Saw(double frequency, double samplerate) :
   Oscillator(frequency, samplerate)
 {
-  std::cout << "constructor Saw called" << std::endl;
+  std::cout << "con Saw" << std::endl;
 }
 
 Saw::~Saw(){
-  std::cout << "deconstructor Saw called" << std::endl;
+  std::cout << "decon Saw" << std::endl;
 }
 
 void Saw::calcNextSample(){
