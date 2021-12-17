@@ -12,5 +12,6 @@ public:
 
 private:
   void calculate() override;
-  Sine sine();
+  void updateFreq(double freq) override;
+  Sine sine;
 };

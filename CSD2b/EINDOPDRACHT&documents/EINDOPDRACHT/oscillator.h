@@ -13,14 +13,16 @@ public:
   void tick();
 
   // setters and getters
+  void setFrequency(double frequency);
   // return the current sample
   double getSample();
 
   //getters and setters
-  void setFrequency(double frequency);
+
   double getFrequency();
 
 protected:
+
   virtual void calcNextSample() = 0;
   double phase;
   double sample;

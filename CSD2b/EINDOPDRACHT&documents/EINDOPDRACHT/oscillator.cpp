@@ -4,12 +4,12 @@ Oscillator::Oscillator(double frequency, double samplerate) :
   phase(0), sample(0), amplitude(1.0) {
   this -> frequency = frequency;
   this -> samplerate = samplerate;
-  std::cout << "constructor oscillator called" << std::endl;
+  std::cout << "con osc" << std::endl;
 
 }
 
 Oscillator::~Oscillator(){
-  std::cout << "deconstructor oscillator called" << std::endl;
+  std::cout << "decon osc" << std::endl;
 
 }
 
@@ -23,7 +23,6 @@ double Oscillator::getSample(){
 
 void Oscillator::tick() {
   phase += frequency / samplerate;
-
   if(phase > 1) phase -= 1.0;
 
   calcNextSample();

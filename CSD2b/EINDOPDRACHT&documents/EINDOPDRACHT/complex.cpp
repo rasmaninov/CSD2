@@ -14,3 +14,7 @@ std::cout << "decon Complex" << std::endl;
 void Complex::calculate(){
 
 }
+
+void Complex::updateFreq(double freq) {
+
+}

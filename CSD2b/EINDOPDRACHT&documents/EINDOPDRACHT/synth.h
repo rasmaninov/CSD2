@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
-#include "sine.h"
+#include "oscillator.h"
 #include <math.h>
+#include "sine.h"
+
 
 class Synth
 {
@@ -10,7 +12,7 @@ public:
   ~Synth();
   // go to next sample
   void tick();
-  // setters and getters
+
   // return the current sample
 
 
@@ -19,12 +21,12 @@ public:
 
 protected:
   virtual void calculate() = 0;
+  virtual void updateFreq(double freq) = 0;
   float midiPitch;
   // returns a frequency
   double mtof(float pitch);
 
   // to cache current sample
   double sample;
-  Sine sine;
 
 };

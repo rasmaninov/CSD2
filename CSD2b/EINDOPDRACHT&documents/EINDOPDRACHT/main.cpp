@@ -21,25 +21,26 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
   // Sine sine(440, samplerate);
-  Complex sine(60, samplerate);
+  Simple synth(60, samplerate);
 
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
 
     for(int i = 0; i < 500; i++) {
-      fileWriter.write(std::to_string(sine.getSample()) + "\n");
-      sine.tick();
+      fileWriter.write(std::to_string(synth.getSample()) + "\n");
+      synth.tick();
     }
 #else
 
   float amplitude = 0.1;
   //assign a function to the JackModule::onProces
-  jack.onProcess = [&sine, &amplitude](jack_default_audio_sample_t *inBuf,
+  jack.onProcess = [&synth, &amplitude](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
 
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = sine.getSample() * amplitude;
-      sine.tick();
+      outBuf[i] = synth.getSample() * amplitude;
+      synth.tick();
+
     }
     amplitude = 0.2;
     return 0;

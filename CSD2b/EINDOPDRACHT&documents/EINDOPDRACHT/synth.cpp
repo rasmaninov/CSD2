@@ -2,19 +2,14 @@
 
 Synth::Synth(float midiPitch, double samplerate) : sample(0)
 {
-  std::cout << "Con Synth" << std::endl;
-  sine.initialize(samplerate);
-  setMidiPitch(midiPitch);
-
+  std::cout << "con Synth" << std::endl;
 }
 
 Synth::~Synth() {
-  std::cout << "Decon Synth" << std::endl;
+  std::cout << "decon Synth" << std::endl;
 }
 
 void Synth::tick(){
-  sine.tick();
-  sample = sine.getSample();
   calculate();
 }
 
@@ -24,11 +19,10 @@ double Synth::getSample(){
 }
 
 void Synth::setMidiPitch(float pitch){
-
   midiPitch = pitch;
 
   double freq = mtof(midiPitch);
-  sine.setFrequency(freq);
+  updateFreq(freq);
 }
 
 double Synth::mtof(float pitch){
