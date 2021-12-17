@@ -10,5 +10,5 @@ public:
   ~Saw();
 
 private:
-    void calcNextSample() override;
+  void calcNextSample() override;
 };
