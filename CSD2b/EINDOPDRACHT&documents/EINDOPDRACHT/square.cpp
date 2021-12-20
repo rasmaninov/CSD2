@@ -13,5 +13,9 @@ Square::~Square(){
 }
 
 void Square::calcNextSample(){
-sample = phase * 2.0 - 1.0;
+  if(phase < 0.5) {
+    sample = 1.0;
+  } else {
+    sample = -1.0;
+  }
 }
