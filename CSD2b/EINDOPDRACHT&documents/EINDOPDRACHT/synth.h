@@ -16,7 +16,7 @@ public:
 
   // return the current sample
 
-
+  void pitchChange(float newPitch);
   double getSample();
   void setMidiPitch(float pitch);
 

@@ -13,6 +13,9 @@ void Synth::tick(){
   calculate();
 }
 
+void Synth::pitchChange(float newPitch){
+  setMidiPitch(newPitch);
+}
 
 double Synth::getSample(){
   return sample;
