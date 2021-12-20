@@ -10,12 +10,22 @@ public:
   Complex(float midiPitch, double samplerate);
   ~Complex();
   double sample1 = 0;
-  double sample2 = 1;
+  double sample2 = 0;
+  double sample3 = 0;
+  double sample4 = 0;
+  double sample5 = 0;
+  double sample6 = 0;
+  double sample7 = 0;
 
 
 private:
   void calculate() override;
   void updateFreq(double freq) override;
-  Saw saw;
-  Sine square;
+  Sine one;
+  Sine two;
+  Sine three;
+  Sine four;
+  Sine five;
+  Sine six;
+  Sine seven;
 };
