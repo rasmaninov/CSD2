@@ -4,7 +4,8 @@ Simple::Simple() : Simple(0,0) {}
 
 Simple::Simple(float midiPitch, double samplerate) : Synth(midiPitch, samplerate) {
   std::cout << "Con Simple" << std::endl;
-  sine.initialize(samplerate);
+  one.initialize(samplerate);
+  two.initialize(samplerate);
   setMidiPitch(midiPitch);
 }
 
@@ -13,10 +14,14 @@ std::cout << "Decon Simple" << std::endl;
 }
 
 void Simple::calculate() {
-  sine.tick();
-  sample = sine.getSample();
+  one.tick();
+  two.tick();
+  sample1 = one.getSample();
+  sample2 = two.getSample();
+  sample = (sample1 + sample2) / 2;
 }
 
 void Simple::updateFreq(double freq) {
-  sine.setFrequency(freq);
+  one.setFrequency(freq + 5);
+  two.setFrequency(freq - 5);
 }

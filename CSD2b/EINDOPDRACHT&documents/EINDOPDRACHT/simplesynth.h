@@ -8,10 +8,13 @@ public:
   Simple(float midiPitch, double samplerate);
   ~Simple();
 
-
+  double sample1 = 0;
+  double sample2 = 0;
 
 private:
   void calculate() override;
   void updateFreq(double freq) override;
-  Sine sine;
+
+  Saw one;
+  Saw two;
 };

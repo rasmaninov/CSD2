@@ -22,7 +22,7 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
   // Sine sine(440, samplerate);
-  Complex synth(30, samplerate);
+  Simple synth(30, samplerate);
 
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
@@ -52,9 +52,9 @@ int main(int argc,char **argv)
         synth.setMidiPitch(newPitch);
         frameCount = 0;
         noteCount = noteCount + 1;
-        std::cout << noteCount << "pitch" << newPitch << std::endl;
+        // std::cout << noteCount << "pitch" << newPitch << std::endl;
         if(noteCount == 16){
-        std::cout<<  "klaahaar" << std::endl;
+        // std::cout<<  "klaahaar" << std::endl;
         break;
         }
       }
