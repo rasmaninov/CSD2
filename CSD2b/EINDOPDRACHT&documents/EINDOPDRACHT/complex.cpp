@@ -16,6 +16,7 @@ Complex::Complex(float midiPitch, double samplerate) : Synth(midiPitch, samplera
   five.initialize(samplerate);
   six.initialize(samplerate);
   seven.initialize(samplerate);
+  eight.initialize(samplerate);
   setMidiPitch(midiPitch);
 }
 
@@ -39,17 +40,19 @@ sample4 = four.getSample();
 sample5 = five.getSample();
 sample6 = six.getSample();
 sample7 = seven.getSample();
-sample = sample1 + 0.75 * sample2 + 0.5 * sample3 + 0.14 * sample4 +
-0.5 * sample5 + 0.12 *sample6 + 0.17 * sample7;
+sample8 = eight.getSample();
+sample = 0.8 * sample1 + 0.4 * sample2 + 0.4 * sample3 + 0.3 * sample4 +
+0.25 * sample5 + 0.2 *sample6 + 0.2 * sample7 + 0.5 * sample8;
 
 }
 
 void Complex::updateFreq(double freq) {
   one.setFrequency(freq);
-  two.setFrequency(3*freq);
-  three.setFrequency(5*freq);
-  four.setFrequency(7*freq);
-  five.setFrequency(9*freq);
-  six.setFrequency(11*freq);
-  seven.setFrequency(13*freq);
+  two.setFrequency(1.30*freq);
+  three.setFrequency(2.63*freq);
+  four.setFrequency(5.32*freq);
+  five.setFrequency(7.28*freq);
+  six.setFrequency(9.29*freq);
+  seven.setFrequency(11.20*freq);
+  eight.setFrequency(15.84*freq);
 }

@@ -16,6 +16,7 @@ public:
   double sample5 = 0;
   double sample6 = 0;
   double sample7 = 0;
+  double sample8 = 0;
 
 
 private:
@@ -28,4 +29,5 @@ private:
   Sine five;
   Sine six;
   Sine seven;
+  Sine eight;
 };
