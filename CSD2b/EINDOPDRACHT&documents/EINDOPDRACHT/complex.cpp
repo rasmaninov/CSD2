@@ -1,9 +1,4 @@
 #include "complex.h"
-//in the complex synth, I synthesize a clarinet using additive synthesis
-//I have used this formula,
-//s(t) = \sin(w) + 0.75 \sin(3 w) + 0.5 \sin(5 w) + 0.14 \sin(7 w) + 0.5 \sin(9 w) + 0.12 \sin(11 w) + 0.17 \sin(13 w)
-//in this case, w = 2(PI)(f0), where f0 is the fundamental frequency.
-//the formula was found on this Stanford webpage : https://ccrma.stanford.edu/~serafin/320/assign2/Synthesis_clarinet.html
 
 Complex::Complex() : Complex(0,0) {}
 
