@@ -32,10 +32,14 @@ int main(int argc,char **argv)
       synth.tick();
     }
 #else
+
+
   float frameCount = 0.0;
   int noteCount = 0;
   int newPitch = 0;
   float amplitude = 0.1;
+
+
   //assign a function to the JackModule::onProces
   jack.onProcess = [&synth, &amplitude, &frameCount, &noteCount, &newPitch](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
