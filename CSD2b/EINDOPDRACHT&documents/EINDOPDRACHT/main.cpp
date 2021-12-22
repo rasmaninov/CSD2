@@ -9,6 +9,7 @@
 #include "simplesynth.h"
 #include "complex.h"
 #include "melodygen.h"
+#include "ui.h"
 
 
 #define WRITE_TO_FILE 0
@@ -48,7 +49,7 @@ int main(int argc,char **argv)
       outBuf[i] = synth.getSample() * amplitude;
       synth.tick();
       frameCount ++;
-      if (frameCount == 40000){
+      if (frameCount == 22050){
         synth.setMidiPitch(mel.notes[step]);
         step = step + 1;
         frameCount = 0;
