@@ -10,11 +10,11 @@ public:
 
   double sample1 = 0;
   double sample2 = 0;
+  int detune = 0;
 
 private:
   void calculate() override;
   void updateFreq(double freq) override;
-
   Saw one;
   Saw two;
 };

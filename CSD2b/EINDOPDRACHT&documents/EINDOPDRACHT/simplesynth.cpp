@@ -6,6 +6,7 @@ Simple::Simple(float midiPitch, double samplerate) : Synth(midiPitch, samplerate
   std::cout << "Con Simple" << std::endl;
   one.initialize(samplerate);
   two.initialize(samplerate);
+  detune = 0;
   setMidiPitch(midiPitch);
 }
 
@@ -22,6 +23,6 @@ void Simple::calculate() {
 }
 
 void Simple::updateFreq(double freq) {
-  one.setFrequency(freq + 5);
-  two.setFrequency(freq - 5);
+  one.setFrequency(freq + detune);
+  two.setFrequency(freq - detune);
 }

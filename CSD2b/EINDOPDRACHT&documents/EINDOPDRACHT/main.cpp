@@ -14,6 +14,7 @@
 
 #define WRITE_TO_FILE 0
 
+
 int main(int argc,char **argv)
 {
   // create a JackModule instance
@@ -22,7 +23,12 @@ int main(int argc,char **argv)
   // init the jack, use program name as JACK client name
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
+  // what
+  Melody mel;
+  mel.MelodyGen();
 
+  Complex complex(mel.notes[0], samplerate);
+  Simple simple(mel.notes[0], samplerate);
 
   std::string synthOptions[2] = {"Simple", "Complex"};
       int numWaveFormOptions = 2;
@@ -31,14 +37,19 @@ int main(int argc,char **argv)
           numWaveFormOptions);
 
       std::cout << "You selected: " << synthSelection << std::endl;
+      if(synthSelection == "Simple"){
+        int detuneValue = 0;
+        detuneValue =  Ui::retrieveValueInRange(0, 10);
+        std::cout << "You chose the following value: " << detuneValue << std::endl;
+      simple.detune = detuneValue;
+      }
 
-  Melody mel;
-  mel.MelodyGen();
+  Synth* synth= nullptr;
 
   if(synthSelection == "Simple"){
-    Simple synth(mel.notes[0], samplerate);
+    synth = &simple;
   } else if (synthSelection == "Complex"){
-    Complex synth(mel.notes[0], samplerate);
+    synth = &complex;
     }
 
 #if WRITE_TO_FILE
@@ -46,7 +57,7 @@ int main(int argc,char **argv)
 
     for(int i = 0; i < 500; i++) {
       fileWriter.write(std::to_string(synth.getSample()) + "\n");
-      synth.tick();
+      synth->tick();
     }
 #else
 
@@ -58,11 +69,11 @@ int main(int argc,char **argv)
   jack.onProcess = [&synth, &amplitude, &step, &frameCount, &mel, &jack](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
     for(unsigned int i = 0; i < nframes; i++) {
-      outBuf[i] = synth.getSample() * amplitude;
-      synth.tick();
+      outBuf[i] = synth->getSample() * amplitude;
+      synth->tick();
       frameCount ++;
       if (frameCount == 22050){
-        synth.setMidiPitch(mel.notes[step]);
+        synth->setMidiPitch(mel.notes[step]);
         step = step + 1;
         frameCount = 0;
         if(step == 15){
