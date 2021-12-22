@@ -6,7 +6,7 @@ Ui::Ui(){
 Ui::~Ui(){
   std::cout << "decon Ui" << std::endl;
 }
-std::string retrieveUserInput(std::string selectionOptions[], int numOptions)
+std::string Ui::retrieveUserInput(std::string selectionOptions[], int numOptions)
 {
     // show user the allowed options
     std::cout << "Please enter your selection. You can choose between: ";
@@ -21,7 +21,7 @@ std::string retrieveUserInput(std::string selectionOptions[], int numOptions)
     return selection;
 }
 
-bool validateSelection(std::string selection, std::string selectionOptions[],
+bool Ui::validateSelection(std::string selection, std::string selectionOptions[],
     int numOptions)
 {
     // check if the selection occurs inside the options, if so, return true
@@ -36,7 +36,7 @@ bool validateSelection(std::string selection, std::string selectionOptions[],
 
 
 
-std::string retrieveUserSelection(std::string selectionOptions[], int numOptions)
+std::string Ui::retrieveUserSelection(std::string selectionOptions[], int numOptions)
 {
     bool noCorrectSelection = true;
     std::string userSelection = "";
@@ -56,7 +56,7 @@ std::string retrieveUserSelection(std::string selectionOptions[], int numOptions
 }
 
 
-float retrieveValueInRange(float min, float max) {
+float Ui::retrieveValueInRange(float min, float max) {
   std::string input;
   float value = 0;
   bool notInRange = true;

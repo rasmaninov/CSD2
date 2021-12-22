@@ -23,6 +23,20 @@ int main(int argc,char **argv)
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
 
+
+  std::string waveFormOptions[4] = {"sine", "saw", "square", "triangle"};
+      int numWaveFormOptions = 4;
+
+      std::string waveTypeSelection = Ui::retrieveUserSelection(waveFormOptions,
+          numWaveFormOptions);
+
+      std::cout << "You selected: " << waveTypeSelection << std::endl;
+
+
+      float value =  Ui::retrieveValueInRange(20, 20499);
+      std::cout << "You chose the following value: " << value << std::endl;
+
+
   Melody mel;
   mel.MelodyGen();
   Complex synth(mel.notes[0], samplerate);
