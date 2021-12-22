@@ -24,24 +24,22 @@ int main(int argc,char **argv)
   double samplerate = jack.getSamplerate();
 
 
-  std::string waveFormOptions[4] = {"sine", "saw", "square", "triangle"};
-      int numWaveFormOptions = 4;
+  std::string synthOptions[2] = {"Simple", "Complex"};
+      int numWaveFormOptions = 2;
 
-      std::string waveTypeSelection = Ui::retrieveUserSelection(waveFormOptions,
+      std::string synthSelection = Ui::retrieveUserSelection(synthOptions,
           numWaveFormOptions);
 
-      std::cout << "You selected: " << waveTypeSelection << std::endl;
-
-
-      float value =  Ui::retrieveValueInRange(20, 20499);
-      std::cout << "You chose the following value: " << value << std::endl;
-
+      std::cout << "You selected: " << synthSelection << std::endl;
 
   Melody mel;
   mel.MelodyGen();
-  Complex synth(mel.notes[0], samplerate);
 
-
+  if(synthSelection == "Simple"){
+    Simple synth(mel.notes[0], samplerate);
+  } else if (synthSelection == "Complex"){
+    Complex synth(mel.notes[0], samplerate);
+    }
 
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
