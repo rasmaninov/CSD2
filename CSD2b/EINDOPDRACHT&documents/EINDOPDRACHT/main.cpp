@@ -13,7 +13,8 @@
 
 
 #define WRITE_TO_FILE 0
-
+// most of this file wasnt written by me, i commented on what i wrote, the rest was
+// written by Ciska Vriezenga and Marc Groenewegen
 
 int main(int argc,char **argv)
 {
@@ -45,13 +46,13 @@ int main(int argc,char **argv)
       }
 
   Synth* synth= nullptr;
-
+// i wrote this
   if(synthSelection == "Simple"){
     synth = &simple;
   } else if (synthSelection == "Complex"){
     synth = &complex;
     }
-
+// until here
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
 
@@ -69,6 +70,7 @@ int main(int argc,char **argv)
   jack.onProcess = [&synth, &amplitude, &step, &frameCount, &mel, &jack](jack_default_audio_sample_t *inBuf,
     jack_default_audio_sample_t *outBuf, jack_nframes_t nframes) {
     for(unsigned int i = 0; i < nframes; i++) {
+      // i wrote this
       outBuf[i] = synth->getSample() * amplitude;
       synth->tick();
       frameCount ++;
@@ -79,6 +81,7 @@ int main(int argc,char **argv)
         if(step == 15){
           jack.end();
         }
+      // until here
       }
 
      }
