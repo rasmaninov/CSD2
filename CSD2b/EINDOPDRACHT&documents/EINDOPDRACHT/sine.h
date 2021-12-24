@@ -10,6 +10,7 @@ public:
   ~Sine();
 
 private:
+  // calculating next sample
   void calcNextSample() override;
 
 };

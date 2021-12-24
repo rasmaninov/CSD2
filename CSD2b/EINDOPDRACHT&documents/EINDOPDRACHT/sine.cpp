@@ -4,15 +4,13 @@
 Sine::Sine() : Sine(0,0) {}
 
 Sine::Sine(double frequency, double samplerate) :
-  Oscillator(frequency, samplerate)
-{
-  std::cout << "con sine" << std::endl;
+  Oscillator(frequency, samplerate) {
 }
 
 Sine::~Sine(){
-  std::cout << "decon sine" << std::endl;
 }
 
+// Calculating next sample based on sample = formula
 void Sine::calcNextSample(){
   sample = sin(M_PI * 2 * phase);
 }

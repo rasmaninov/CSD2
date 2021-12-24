@@ -2,7 +2,7 @@
 #include <iostream>
 #include "oscillator.h"
 
-class Square : public Oscillator 
+class Square : public Oscillator
 {
 public:
   Square();
@@ -10,5 +10,6 @@ public:
   ~Square();
 
 private:
+  // calculating next sample
   void calcNextSample() override;
 };

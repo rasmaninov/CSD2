@@ -10,5 +10,6 @@ public:
   ~Saw();
 
 private:
+  // calculating next sample
   void calcNextSample() override;
 };

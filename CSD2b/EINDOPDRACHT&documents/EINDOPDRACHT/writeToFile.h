@@ -1,3 +1,5 @@
+// by Ciska Vriezenga and Marc Groenewegen
+
 #include <iostream>
 #include <fstream>
 #include <sys/stat.h>

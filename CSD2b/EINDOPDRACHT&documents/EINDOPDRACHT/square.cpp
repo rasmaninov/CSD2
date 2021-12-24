@@ -3,15 +3,13 @@
 
 Square::Square() : Square(0,0){}
 
-Square::Square(double frequency, double samplerate) : Oscillator(frequency, samplerate)
-{
-  std::cout << "constructor Square called" << std::endl;
+Square::Square(double frequency, double samplerate) : Oscillator(frequency, samplerate) {
 }
 
 Square::~Square(){
-  std::cout << "deconstructor Square called" << std::endl;
 }
 
+// calculating next sample based on if statement
 void Square::calcNextSample(){
   if(phase < 0.5) {
     sample = 1.0;

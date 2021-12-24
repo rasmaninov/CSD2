@@ -1,3 +1,5 @@
+// by Ciska Vriezenga and Marc Groenewegen
+
 #include "writeToFile.h"
 
 WriteToFile::WriteToFile(std::string fileName, bool overwrite)
