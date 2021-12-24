@@ -1,6 +1,5 @@
 #pragma once
 #include "synth.h"
-#include "sine.h"
 
 class Simple : public Synth {
 public:
@@ -12,6 +11,7 @@ public:
 
   double sample1 = 0;
   double sample2 = 0;
+  double sample3 = 0;
   // the amount of detune
   int detune = 0;
 
@@ -22,4 +22,5 @@ private:
   void updateFreq(double freq) override;
   Saw one;
   Saw two;
+  Square three;
 };
