@@ -9,24 +9,13 @@ public:
   Complex();
   Complex(float midiPitch, double samplerate);
   ~Complex();
-  double sample1 = 0;
-  double sample2 = 0;
-  double sample3 = 0;
-  double sample4 = 0;
-  double sample5 = 0;
-  double sample6 = 0;
-  double sample7 = 0;
-  double sample8 = 0;
 
+  Sine oscs[8];
+  double samples[8];
+  double ratios[8] = {1, 1.30, 2.63, 5.32, 7.28, 9.29, 11.20, 15.84};
+  
 private:
   void calculate() override;
   void updateFreq(double freq) override;
-  Sine one;
-  Sine two;
-  Sine three;
-  Sine four;
-  Sine five;
-  Sine six;
-  Sine seven;
-  Sine eight;
+
 };
