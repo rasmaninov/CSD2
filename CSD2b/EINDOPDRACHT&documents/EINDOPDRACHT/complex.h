@@ -18,7 +18,6 @@ public:
   double sample7 = 0;
   double sample8 = 0;
 
-
 private:
   void calculate() override;
   void updateFreq(double freq) override;

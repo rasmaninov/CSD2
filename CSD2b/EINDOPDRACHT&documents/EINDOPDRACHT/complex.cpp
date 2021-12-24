@@ -1,9 +1,13 @@
 #include "complex.h"
+#include <map>
+#include <string>
 
 Complex::Complex() : Complex(0,0) {}
 
+
 Complex::Complex(float midiPitch, double samplerate) : Synth(midiPitch, samplerate) {
   std::cout << "con Complex" << std::endl;
+
   one.initialize(samplerate);
   two.initialize(samplerate);
   three.initialize(samplerate);
