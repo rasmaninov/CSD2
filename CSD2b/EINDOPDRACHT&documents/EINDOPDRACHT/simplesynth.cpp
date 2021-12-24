@@ -14,6 +14,7 @@ Simple::~Simple() {
 std::cout << "Decon Simple" << std::endl;
 }
 
+// calculate next sample combining both oscillators
 void Simple::calculate() {
   one.tick();
   two.tick();
@@ -22,6 +23,7 @@ void Simple::calculate() {
   sample = (sample1 + sample2) / 2;
 }
 
+// updating the frequency and accounting for detunation
 void Simple::updateFreq(double freq) {
   one.setFrequency(freq + detune);
   two.setFrequency(freq - detune);

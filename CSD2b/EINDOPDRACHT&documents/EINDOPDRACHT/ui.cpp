@@ -1,11 +1,13 @@
+// by Ciska Vriezenga and Marc Groenewegen
+
 #include "ui.h"
 
 Ui::Ui(){
-  std::cout << "con Ui" << std::endl;
 }
+
 Ui::~Ui(){
-  std::cout << "decon Ui" << std::endl;
 }
+
 std::string Ui::retrieveUserInput(std::string selectionOptions[], int numOptions)
 {
     // show user the allowed options
@@ -34,8 +36,6 @@ bool Ui::validateSelection(std::string selection, std::string selectionOptions[]
     return false;
 }
 
-
-
 std::string Ui::retrieveUserSelection(std::string selectionOptions[], int numOptions)
 {
     bool noCorrectSelection = true;
@@ -54,7 +54,6 @@ std::string Ui::retrieveUserSelection(std::string selectionOptions[], int numOpt
     }
     return userSelection;
 }
-
 
 float Ui::retrieveValueInRange(float min, float max) {
   std::string input;

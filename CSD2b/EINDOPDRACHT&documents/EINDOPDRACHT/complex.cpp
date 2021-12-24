@@ -14,6 +14,7 @@ Complex::Complex(float midiPitch, double samplerate) : Synth(midiPitch, samplera
 
 Complex::~Complex() {}
 
+// calculating the next sample combining all oscillators
 void Complex::calculate(){
   for(int i = 0; i < 8; i++){
     oscs[i].tick();
@@ -22,6 +23,7 @@ void Complex::calculate(){
 
 }
 
+// updating the frequencies for all oscillators
 void Complex::updateFreq(double freq) {
   for(int i = 0; i < 8; i++){
     oscs[i].setFrequency(freq * ratios[i]);
