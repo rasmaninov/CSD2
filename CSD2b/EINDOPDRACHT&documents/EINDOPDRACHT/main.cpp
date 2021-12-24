@@ -24,13 +24,14 @@ int main(int argc,char **argv)
   // init the jack, use program name as JACK client name
   jack.init(argv[0]);
   double samplerate = jack.getSamplerate();
-  // what
+  // generate a melody
   Melody mel;
   mel.MelodyGen();
 
   Complex complex(mel.notes[0], samplerate);
   Simple simple(mel.notes[0], samplerate);
 
+// letting the user select the synth and the detune
   std::string synthOptions[2] = {"Simple", "Complex"};
       int numWaveFormOptions = 2;
 
@@ -45,6 +46,7 @@ int main(int argc,char **argv)
       simple.detune = detuneValue;
       }
 
+
   Synth* synth= nullptr;
 // i wrote this
   if(synthSelection == "Simple"){
@@ -53,6 +55,8 @@ int main(int argc,char **argv)
     synth = &complex;
     }
 // until here
+
+// writing the waveform to file
 #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
 
