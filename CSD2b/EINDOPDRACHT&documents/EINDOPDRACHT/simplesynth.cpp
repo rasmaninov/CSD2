@@ -3,7 +3,6 @@
 Simple::Simple() : Simple(0,0) {}
 
 Simple::Simple(float midiPitch, double samplerate) : Synth(midiPitch, samplerate) {
-  std::cout << "Con Simple" << std::endl;
   one.initialize(samplerate);
   two.initialize(samplerate);
   detune = 0;
@@ -11,7 +10,6 @@ Simple::Simple(float midiPitch, double samplerate) : Synth(midiPitch, samplerate
 }
 
 Simple::~Simple() {
-std::cout << "Decon Simple" << std::endl;
 }
 
 // calculate next sample combining both oscillators
