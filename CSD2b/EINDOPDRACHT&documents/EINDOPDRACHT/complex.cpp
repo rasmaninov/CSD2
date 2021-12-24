@@ -12,15 +12,14 @@ Complex::Complex(float midiPitch, double samplerate) : Synth(midiPitch, samplera
   setMidiPitch(midiPitch);
 }
 
-Complex::~Complex() {
-
-}
+Complex::~Complex() {}
 
 void Complex::calculate(){
   for(int i = 0; i < 8; i++){
     oscs[i].tick();
     sample  += oscs[i].getSample() *0.01;
   }
+
 }
 
 void Complex::updateFreq(double freq) {

@@ -2,7 +2,7 @@
 #
 # 2017 Marc Groenewegen
 # altered by Ciska Vriezenga to serve as a simple example
-#
+# added by Rahsaan ayeee
 */
 
 #ifndef _JACK_MODULE_H_
