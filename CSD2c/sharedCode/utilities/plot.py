@@ -1,5 +1,3 @@
-# By Ciska Vriezenga and Marc Groenewegen 
-
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -7,7 +5,8 @@ import csv
 
 # create a list and import data from output.csv file
 data = list()
-with open('./output.csv', 'r') as file:
+# TODO - pass filepath as argument 
+with open('output.csv', 'r') as file:
     reader = csv.reader(file)
     for row in reader:
         data.append(float(row[0]))
@@ -27,5 +26,5 @@ ax.set(xlabel='sample', ylabel='output',
 ax.grid()
 
 # To save the result, outcomment the line below:
-fig.savefig("plot.png")
+# fig.savefig("data_plot.png")
 plt.show()
