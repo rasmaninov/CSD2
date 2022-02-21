@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
     tremolo.processFrame(inBuf[i], outBuf[i]);
 
     outBuf[i] = inBuf[i] * amplitude;
-        // ----- write result to file -----
+        // ----- write result to file ----- bro
   #if WRITE_TO_FILE
         static int count = 0;
         if(count < WRITE_NUM_SAMPLES) {
