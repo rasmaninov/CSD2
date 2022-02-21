@@ -1,4 +1,4 @@
-#include "tremolo.h"
+#include "tremsub.h"
 #include "writeToFile.h"
 #include "jack_module.h"
 #include "sine.h"

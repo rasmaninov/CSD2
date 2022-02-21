@@ -1,5 +1,6 @@
-#include "tremolo.h"
+#include "tremsub.h"
 #include "sine.h"
+#include "square.h"
 
 Tremolo::Tremolo(float freq, int samplerate)
 {
@@ -20,7 +21,7 @@ void Tremolo::setModFreq(float freq)
 float Tremolo::processFrame(float sample)
 {
 
-  modSignal = (osc->genNextSample() +1.0f) * 0.5f;
+    modSignal = (osc->genNextSample() +1.0f) * 0.5f;
 
-  return modSignal;
+    return modSignal;
 }
