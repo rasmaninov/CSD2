@@ -4,9 +4,22 @@
 class Effect
 {
 public:
-  // Effect();
-  Effect();
-  ~Effect();
+
+  Effect(float dryWet = 1.0);
+  virtual ~Effect();
+
+  void processFrame(float& input, float& output);
+
+  float getSample();
+  void setDryWet(float dryWet);
+
+protected:
+
+  virtual void applyEffect(float& input, float& output) = 0;
+
 private:
-  float processFrame(float sample);
+  float dryWet;
+  float wetDry;
+  float m_sample;
+
 };

@@ -7,14 +7,16 @@
 class Tremolo : public Effect
 {
 public:
-  Tremolo(float freq, int samplerate);
+  Tremolo(float samplerate, float modFreq = 10.0f, float modDepth = 1.0f);
   ~Tremolo();
 
-  void setModFreq(float freq);
-  float processFrame(float sample);
+  void setModFreq(float modFreq);
+  void applyEffect(float& input, float& output) override;
 
-private:
+protected:
 
-  Oscillator* osc;
-  float modSignal;
+  Oscillator* m_osc;
+
+  float m_modDepth;
+  float m_modSignal = 0;
 };
