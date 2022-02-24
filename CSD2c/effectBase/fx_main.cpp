@@ -18,12 +18,13 @@ int main(int argc, char **argv) {
   float amplitude = 0.5;
   // instantiate tremolo effect
   Tremolo tremolo(samplerate);
+  Sine sine(440, samplerate);
 
 
   #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
     // assign a function to the JackModule::onProces
-    jack.onProcess = [&amplitude, &tremolo, &fileWriter](jack_default_audio_sample_t* inBuf,
+    jack.onProcess = [&amplitude, &tremolo, &sine, &fileWriter](jack_default_audio_sample_t* inBuf,
       jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
   #else
     // assign a function to the JackModule::onProces
@@ -31,9 +32,9 @@ int main(int argc, char **argv) {
       jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
   #endif
       for(unsigned int i = 0; i < nframes; i++) {
-    tremolo.processFrame(inBuf[i], outBuf[i]);
 
-    outBuf[i] = inBuf[i] * amplitude;
+
+        outBuf[i] = tremolo.processFrame(inBuf[i], outBuf[i]);
         // ----- write result to file ----- bro
   #if WRITE_TO_FILE
         static int count = 0;

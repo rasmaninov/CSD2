@@ -18,6 +18,7 @@ void Tremolo::setModFreq(float modFreq)
   m_osc->setFrequency(modFreq);
 }
 
+
 void Tremolo::applyEffect(float& input, float& output){
   m_modSignal = m_osc->genNextSample() * 0.5 + 0.5;
 

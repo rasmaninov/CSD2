@@ -11,6 +11,7 @@ public:
   ~Tremolo();
 
   void setModFreq(float modFreq);
+  // void setModDepth(float modDepth);
   void applyEffect(float& input, float& output) override;
 
 protected:

@@ -8,11 +8,11 @@ Effect::Effect(float dryWet){
 Effect::~Effect(){
 }
 
-void Effect::processFrame(float& input, float& output){
+float Effect::processFrame(float& input, float& output){
   applyEffect(input, output);
   output = input * wetDry + output * dryWet;
 
-  m_sample = output;
+  return output;
 }
 
 float Effect::getSample(){
