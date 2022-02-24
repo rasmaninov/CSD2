@@ -1,5 +1,4 @@
 #include "fxbase.h"
-#include <iostream>
 
 Effect::Effect(float dryWet){
   setDryWet(dryWet);

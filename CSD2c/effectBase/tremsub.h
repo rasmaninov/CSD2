@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "oscillator.h"
 #include "fxbase.h"
 
