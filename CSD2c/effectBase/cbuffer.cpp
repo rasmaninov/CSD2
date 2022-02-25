@@ -39,4 +39,5 @@ int Cbuffer::wrapH(int head){
 
 void Cbuffer::setNumSamplesDelay(float delayInSamps){
   numSamplesDelay = floor(delayInSamps);
+  // update read and write??
 }
