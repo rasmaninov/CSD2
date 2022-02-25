@@ -18,4 +18,4 @@ private:
   float* buffer;
 
 
-}
+};

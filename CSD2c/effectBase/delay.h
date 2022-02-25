@@ -1,5 +1,6 @@
 #pragma once
 #include "fxbase.h"
+#include "cbuffer.h"
 
 class Delay : public Effect
 {
@@ -9,8 +10,9 @@ public:
 
   void applyEffect(float& input, float& output) override;
 
+
 protected:
   float m_modDepth;
   float m_modSignal = 0;
-
+  Cbuffer cbuffer;
 };

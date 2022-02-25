@@ -2,6 +2,7 @@
 #include "writeToFile.h"
 #include "jack_module.h"
 #include "sine.h"
+#include "delay.h"
 
 #define WRITE_TO_FILE 0
 
@@ -18,6 +19,7 @@ int main(int argc, char **argv) {
   float amplitude = 0.5;
   // instantiate tremolo effect
   Tremolo tremolo(samplerate);
+  Delay delay(samplerate, 1.0);
   Sine sine(440, samplerate);
 
 
@@ -28,13 +30,13 @@ int main(int argc, char **argv) {
       jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
   #else
     // assign a function to the JackModule::onProces
-    jack.onProcess = [&tremolo, &amplitude](jack_default_audio_sample_t* inBuf,
+    jack.onProcess = [&amplitude, &tremolo, &delay](jack_default_audio_sample_t* inBuf,
       jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
   #endif
       for(unsigned int i = 0; i < nframes; i++) {
 
 
-        outBuf[i] = tremolo.processFrame(inBuf[i], outBuf[i]);
+        delay.processFrame(inBuf[i], outBuf[i]);
         // ----- write result to file ----- bro
   #if WRITE_TO_FILE
         static int count = 0;
