@@ -1,23 +1,31 @@
 #include "delay.h"
 
-Delay::Delay(float samplerate, float modDepth) : Effect(),
+Delay::Delay(float samplerate, float modDepth, float feedback, float delayInMS ) : Effect(),
   m_modDepth(modDepth),
-  cbuffer(44100, 44099)
+  cbuffer(44100, 22050)
 {
-
+  this->feedback = feedback;
+  this->samplerate = samplerate;
+  delayMS(delayInMS);
 }
 
 Delay::~Delay() {
-
 }
 
 void Delay::applyEffect(float& input, float& output){
-  cbuffer.write(input);
-  m_modSignal = 0.5 + 0.5;
+  output = m_modSignal + input;
+
+  cbuffer.write(input + output * feedback);
+  m_modSignal = cbuffer.read();
 
   m_modSignal *= m_modDepth;
   m_modSignal += 1.0 - m_modDepth;
 
-  output = cbuffer.read() * m_modSignal;
+}
+
+void Delay::delayMS(float delayInMS){
+  delayInSamps = delayInMS * (samplerate / 1000);
+
+  cbuffer.setNumSamplesDelay(delayInSamps);
 
 }

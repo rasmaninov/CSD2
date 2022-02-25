@@ -17,9 +17,8 @@ int main(int argc, char **argv) {
   jack.init(argv[0]);
   float samplerate = jack.getSamplerate();
   // instantiate tremolo effect
-  Tremolo tremolo(samplerate);
-  Delay delay(samplerate, 1.0);
-  Sine sine(440, samplerate);
+  Tremolo tremolo(samplerate, 0);
+  Delay delay(samplerate, 1, 1, 1000);
   float outbuf1;
 
   #if WRITE_TO_FILE

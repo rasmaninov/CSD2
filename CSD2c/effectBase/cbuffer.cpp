@@ -1,4 +1,5 @@
 #include "cbuffer.h"
+#include <cmath>
 // initializer list = values after colon
 Cbuffer::Cbuffer(int size, int numSamplesDelay) :
   readH(size - numSamplesDelay),
@@ -12,7 +13,6 @@ Cbuffer::Cbuffer(int size, int numSamplesDelay) :
   for(int i =0; i < size; i++){
     buffer[i] = 0;
   }
-
 }
 
 Cbuffer::~Cbuffer(){
@@ -35,4 +35,8 @@ float Cbuffer::read(){
 int Cbuffer::wrapH(int head){
   if(head >= size) head -= size;
   return head;
+}
+
+void Cbuffer::setNumSamplesDelay(float delayInSamps){
+  numSamplesDelay = floor(delayInSamps);
 }
