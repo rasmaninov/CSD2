@@ -18,5 +18,18 @@ Cbuffer::~Cbuffer(){
 }
 
 void Cbuffer::write(float value){
-  
+
+  buffer[writeH++] = value;
+  writeH = wrapH(writeH);
+}
+
+float Cbuffer::read(){
+  float value = buffer[readH++];
+  readH = wrapH(readH);
+  return value;
+}
+
+int Cbuffer::wrapH(int head){
+  if(head >= size) head -= size;
+  return head;
 }
