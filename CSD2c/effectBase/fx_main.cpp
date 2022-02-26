@@ -64,7 +64,12 @@ int main(int argc, char **argv) {
     jack.autoConnect();
 
     //keep the program running and listen for user input, q = quit
-    std::cout << "\n\nPress 'q' when you want to quit the program.\n";
+    std::cout << "\n\nPress 'q' when you want to quit the program."
+                "\nPress 'c' when you want to change the delaytime in milliseconds"
+                "\nPress 's' when you want to change the delaytime in samples"
+                "\nPress 'f' when you want to change the feedback amount"
+                "\nPress 'd' when you want to change the delay dry/wet setting"
+                "\nPress 't' when you want to change the tremolo dry/wet setting\n";
     // boolean is used to keep program running / turn it off
     bool running = true;
     while (running)
@@ -75,14 +80,64 @@ int main(int argc, char **argv) {
           running = false;
           jack.end();
           break;
-        case 'c' :
+        case 'c':
           std::cout << "change delaytime in MS [1- 9999]" << std::endl;
+          x = 0;
           std::cin >> x;
           if(x < 10000 && x > 0){
             delay.delayMS(x);
+            break;
           } else {
             std::cout << "nah bruh too big" << std::endl;
           }
+        case 's':
+          std::cout << "change delaytime in samples [1- 440999]" << std::endl;
+          x = 0;
+          std::cin >> x;
+          if (x < 441000 && x > 0 ){
+            delay.delaySamps(x);
+            break;
+          } else {
+            std::cout << "out of bounds" << std::endl;
+          }
+
+
+        case 'f':
+          std::cout << "change feedback [0. - 1.]" << std::endl;
+          x = 0;
+          std::cin >> x;
+          if (x < 1 && x > 0 ){
+            // delay.setFeedback(x);
+            break;
+          } else {
+            std::cout << "out of bounds" << std::endl;
+          }
+
+
+        case 'd':
+          std::cout << "change dry/wet delay [0. - 1.]" << std::endl;
+          x = 0;
+          std::cin >> x;
+          if (x < 1 && x > 0 ){
+
+            break;
+          } else {
+            std::cout << "out of bounds" << std::endl;
+          }
+
+
+        case 't':
+          std::cout << "change dry/wet tremolo [0. - 1.]" << std::endl;
+          x = 0;
+          std::cin >> x;
+          if (x < 1 && x > 0 ){
+
+            break;
+          } else {
+            std::cout << "out of bounds" << std::endl;
+          }
+
+
 
         }
     }
