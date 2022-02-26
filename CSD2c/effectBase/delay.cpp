@@ -2,7 +2,7 @@
 
 Delay::Delay(float samplerate, float modDepth, float feedback, float delayInMS ) : Effect(),
   m_modDepth(modDepth),
-  cbuffer(44100, 22050)
+  cbuffer(441000, 22050)
 {
   this->feedback = feedback;
   this->samplerate = samplerate;

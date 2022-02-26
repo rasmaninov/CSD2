@@ -3,6 +3,7 @@
 #include "jack_module.h"
 #include "sine.h"
 #include "delay.h"
+#include <iostream>
 
 #define WRITE_TO_FILE 0
 
@@ -20,6 +21,7 @@ int main(int argc, char **argv) {
   Tremolo tremolo(samplerate, 0);
   Delay delay(samplerate, 0.4, 0.7, 200);
   float outbuf1;
+  float x = 0;
 
   #if WRITE_TO_FILE
     WriteToFile fileWriter("output.csv", true);
@@ -73,6 +75,15 @@ int main(int argc, char **argv) {
           running = false;
           jack.end();
           break;
+        case 'c' :
+          std::cout << "change delaytime in MS [1- 9999]" << std::endl;
+          std::cin >> x;
+          if(x < 10000 && x > 0){
+            delay.delayMS(x);
+          } else {
+            std::cout << "nah bruh too big" << std::endl;
+          }
+
         }
     }
 
