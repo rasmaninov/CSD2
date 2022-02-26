@@ -26,6 +26,7 @@ void Delay::applyEffect(float& input, float& output){
 void Delay::delayMS(float delayInMS){
   delayInSamps = delayInMS * (samplerate / 1000);
 
+
   cbuffer.setNumSamplesDelay(delayInSamps);
 
 }

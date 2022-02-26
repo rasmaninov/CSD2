@@ -13,9 +13,13 @@ Cbuffer::Cbuffer(int size, int numSamplesDelay) :
   for(int i =0; i < size; i++){
     buffer[i] = 0;
   }
+
 }
 
 Cbuffer::~Cbuffer(){
+  std::cout << numSamplesDelay << "numsamps" <<std::endl;
+  std::cout << size << "size" << std::endl;
+  std::cout << readH << "read" << std::endl;
   // delete dynamic array
   delete [] buffer;
 }
@@ -38,6 +42,13 @@ int Cbuffer::wrapH(int head){
 }
 
 void Cbuffer::setNumSamplesDelay(float delayInSamps){
-  numSamplesDelay = floor(delayInSamps);
-  // update read and write??
+  this->numSamplesDelay =  floor(delayInSamps);
+  this->readH = (size-numSamplesDelay);
+
+
+  std::cout << numSamplesDelay << "numsamps" <<std::endl;
+  std::cout << size << "size" << std::endl;
+  std::cout << readH << "read" << std::endl;
+
+
 }

@@ -9,7 +9,6 @@ public:
   ~Delay();
 
   void applyEffect(float& input, float& output) override;
-
   void delayMS(float delayInSamps);
 protected:
   float m_modDepth;
