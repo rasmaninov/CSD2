@@ -17,9 +17,6 @@ Cbuffer::Cbuffer(int size, int numSamplesDelay) :
 }
 
 Cbuffer::~Cbuffer(){
-  std::cout << numSamplesDelay << "numsamps" <<std::endl;
-  std::cout << size << "size" << std::endl;
-  std::cout << readH << "read" << std::endl;
   // delete dynamic array
   delete [] buffer;
 }
