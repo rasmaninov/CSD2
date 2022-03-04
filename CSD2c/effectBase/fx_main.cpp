@@ -3,6 +3,7 @@
 #include "jack_module.h"
 #include "sine.h"
 #include "delay.h"
+#include "wave.h"
 #include <iostream>
 
 #define WRITE_TO_FILE 0
@@ -19,7 +20,10 @@ int main(int argc, char **argv) {
   float samplerate = jack.getSamplerate();
   // instantiate tremolo effect
   Tremolo tremolo(samplerate, 10, 0);
+  // instantiate delay effect
   Delay delay(samplerate, 0, 0.7, 200);
+  // instantiate waveshaper Effect
+  Waveshaper wave(samplerate, 1);
   float outbuf1;
   float x = 0;
 
@@ -30,13 +34,14 @@ int main(int argc, char **argv) {
       jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
   #else
     // assign a function to the JackModule::onProces
-    jack.onProcess = [&tremolo, &delay, &outbuf1](jack_default_audio_sample_t* inBuf,
+    jack.onProcess = [&tremolo, &delay, &wave, &outbuf1](jack_default_audio_sample_t* inBuf,
       jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
   #endif
       for(unsigned int i = 0; i < nframes; i++) {
 
-        tremolo.processFrame(inBuf[i], outbuf1);
-        delay.processFrame(outbuf1, outBuf[i]);
+        // tremolo.processFrame(inBuf[i], outbuf1);
+        // delay.processFrame(outbuf1, outBuf[i]);
+        wave.processFrame(inBuf[i], outBuf[i]);
         // ----- write result to file ----- bro
   #if WRITE_TO_FILE
         static int count = 0;
