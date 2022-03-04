@@ -1,0 +1,5 @@
+DSP - 3-03
+  - lowpass/ highpass filter.
+  - carthesisch vs polaire vorm.
+
+  programma schrijven dat : gnoeplot/pythonplot firs only nigga
