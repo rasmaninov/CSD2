@@ -6,7 +6,7 @@
 class Tremolo : public Effect
 {
 public:
-  Tremolo(float samplerate, float modFreq = 10.0f, float modDepth = 1.0f);
+  Tremolo(float samplerate, float modFreq, float modDepth);
   ~Tremolo();
 
   void setModFreq(float modFreq);

@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   Sine sine (440, samplerate);
 
   // instantiate tremolo effect
-  Tremolo tremolo(10, samplerate);
+  Tremolo tremolo(0, samplerate);
 
 
   #if WRITE_TO_FILE

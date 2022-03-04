@@ -18,8 +18,8 @@ int main(int argc, char **argv) {
   jack.init(argv[0]);
   float samplerate = jack.getSamplerate();
   // instantiate tremolo effect
-  Tremolo tremolo(samplerate, 0);
-  Delay delay(samplerate, 0.4, 0.7, 200);
+  Tremolo tremolo(samplerate, 40, 0.5);
+  Delay delay(samplerate, 1, 0.7, 200);
   float outbuf1;
   float x = 0;
 
@@ -106,8 +106,8 @@ int main(int argc, char **argv) {
           std::cout << "change feedback [0. - 1.]" << std::endl;
           x = 0;
           std::cin >> x;
-          if (x < 1 && x > 0 ){
-            // delay.setFeedback(x);
+          if (x < 1 && x >= 0 ){
+            delay.setFeedback(x);
             break;
           } else {
             std::cout << "out of bounds" << std::endl;
@@ -118,8 +118,8 @@ int main(int argc, char **argv) {
           std::cout << "change dry/wet delay [0. - 1.]" << std::endl;
           x = 0;
           std::cin >> x;
-          if (x < 1 && x > 0 ){
-
+          if (x < 1 && x >= 0 ){
+            delay.setDryWet(x);
             break;
           } else {
             std::cout << "out of bounds" << std::endl;
@@ -130,8 +130,8 @@ int main(int argc, char **argv) {
           std::cout << "change dry/wet tremolo [0. - 1.]" << std::endl;
           x = 0;
           std::cin >> x;
-          if (x < 1 && x > 0 ){
-
+          if (x < 1 && x >= 0 ){
+            tremolo.setDryWet(x);
             break;
           } else {
             std::cout << "out of bounds" << std::endl;

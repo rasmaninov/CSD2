@@ -4,7 +4,7 @@
 
 Tremolo::Tremolo(float samplerate, float modFreq, float modDepth) : Effect(), m_modDepth(modDepth)
 {
-  m_osc = new Sine(modFreq, samplerate);
+  m_osc = new Square(modFreq, samplerate);
 }
 
 Tremolo::~Tremolo()
