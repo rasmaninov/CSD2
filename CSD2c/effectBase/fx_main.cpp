@@ -19,9 +19,9 @@ int main(int argc, char **argv) {
   jack.init(argv[0]);
   float samplerate = jack.getSamplerate();
   // instantiate tremolo effect
-  Tremolo tremolo(samplerate, 10, 0);
+  Tremolo tremolo(samplerate, 10, 0.9);
   // instantiate delay effect
-  Delay delay(samplerate, 0, 0.7, 200);
+  Delay delay(samplerate, 0.99, 0.99, 200);
   // instantiate waveshaper Effect
   Waveshaper wave(samplerate, 1);
   float outbuf1;
@@ -39,9 +39,9 @@ int main(int argc, char **argv) {
   #endif
       for(unsigned int i = 0; i < nframes; i++) {
 
-        // tremolo.processFrame(inBuf[i], outbuf1);
-        // delay.processFrame(outbuf1, outBuf[i]);
-        wave.processFrame(inBuf[i], outBuf[i]);
+        tremolo.processFrame(inBuf[i], outbuf1);
+        delay.processFrame(outbuf1, outBuf[i]);
+        // wave.processFrame(inBuf[i], outBuf[i]);
         // ----- write result to file ----- bro
   #if WRITE_TO_FILE
         static int count = 0;
