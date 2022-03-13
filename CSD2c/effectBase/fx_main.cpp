@@ -26,43 +26,18 @@ int main(int argc, char **argv) {
   Waveshaper wave(samplerate, 1);
   float outbuf1;
   float x = 0;
+  Sine sine(440, samplerate);
 
-  #if WRITE_TO_FILE
-    WriteToFile fileWriter("output.csv", true);
     // assign a function to the JackModule::onProces
-    jack.onProcess = [&amplitude, &tremolo, &sine, &fileWriter](jack_default_audio_sample_t* inBuf,
+    jack.onProcess = [&sine, &tremolo, &delay, &wave, &outbuf1](jack_default_audio_sample_t* inBuf,
       jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
-  #else
-    // assign a function to the JackModule::onProces
-    jack.onProcess = [&tremolo, &delay, &wave, &outbuf1](jack_default_audio_sample_t* inBuf,
-      jack_default_audio_sample_t* outBuf, jack_nframes_t nframes) {
-  #endif
+  // #endif
       for(unsigned int i = 0; i < nframes; i++) {
-
+        // outBuf[i] = sine.genNextSample();
         tremolo.processFrame(inBuf[i], outbuf1);
         delay.processFrame(outbuf1, outBuf[i]);
         // wave.processFrame(inBuf[i], outBuf[i]);
-        // ----- write result to file ----- bro
-  #if WRITE_TO_FILE
-        static int count = 0;
-        if(count < WRITE_NUM_SAMPLES) {
-          fileWriter.write(std::to_string(outBuf[i]) + "\n");
-        } else {
-          // log 'Done' message to console, only once
-          static bool loggedDone = false;
-          if(!loggedDone) {
-            std::cout << "\n**** DONE **** \n"
-              << "Output is written to file.\n"
-              << "Please enter 'q' to quit the program." << std::endl;
-            loggedDone = true;
-          }
-        }
-        count++;
-        // set output to 0 to prevent issues with output
-        outBuf[i] = 0;
-  #endif
       }
-
       return 0;
     };
 
