@@ -2,11 +2,11 @@ CXX= g++
 CXXFLAGS = -I/usr/local/include -Wall -std=c++1z
 LDFLAGS=-ljack
 # the cpp files from the current project to include
-SRC_PROJECT = tremsub.cpp tremsub.h fxbase.cpp fxbase.h delay.h delay.cpp cbuffer.h cbuffer.cpp wave.h wave.cpp fx_main.cpp
+SRC_PROJECT = stereo_main.cpp jack_module.cpp jack_module.h ringbuffer.cpp ringbuffer.h
 # the directory to the folder with the shared modules
 SHAREDCODE_PATH = ../sharedCode/
 # the modules to include
-MODULES = oscillators utilities
+MODULES = oscillators
 TARGET=example
 
 # append shared code path prefix to modules
@@ -35,8 +35,8 @@ $(TARGET):$(OBJ)
 .cpp.o:
 	$(CXX) -c $< $(CXXFLAGS) -o $*.o
 
-plot:
-	python3 $(SHAREDCODE_PATH)utilities/plot.py
+# plot:
+# 	python3 $(SHAREDCODE_PATH)stereoutils/plot.py
 
 clean:
 	rm $(TARGET)

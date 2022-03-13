@@ -12,8 +12,19 @@ float samplerate = 44100;
 Sine sine(440, samplerate);
 Sine sone(220, samplerate);
 bool running = true;
+//
+// static void filter(){
+//
+// }
 
-static void filter(){
+int main(int argc, char **argv){
+
+  jack.init(argv[0]);
+  jack.autoConnect();
+
+  jack.setNumberOfInputChannels(2);
+  jack.setNumberOfOutputChannels(2);
+
   float *inbuffer = new float[chunksize];
   float *outbuffer = new float[chunksize];
 
@@ -27,16 +38,6 @@ static void filter(){
     }
     jack.writeSamples(outbuffer,chunksize*2);
   } while(running);
-
-}
-
-int main(int argc, char **argv){
-
-  jack.init(argv[0]);
-  jack.autoConnect();
-
-  jack.setNumberOfInputChannels(2);
-  jack.setNumberOfOutputChannels(2);
 
   return 0;
 }
