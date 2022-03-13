@@ -6,25 +6,18 @@
 #include <unistd.h>
 #include <iostream>
 
-int main(int argc, char **argv){
-  unsigned long chunksize = 2048;
+unsigned long chunksize = 2048;
+JackModule jack;
+float samplerate = 44100;
+Sine sine(440, samplerate);
+Sine sone(220, samplerate);
+bool running = true;
 
-  JackModule jack;
-
-  jack.setNumberOfInputChannels(2);
-  jack.setNumberOfOutputChannels(2);
-
-  jack.init(argv[0]);
-  float samplerate = jack.getSamplerate();
-
-  Sine sine(440, samplerate);
-  Sine sone(220, samplerate);
-
+static void filter(){
   float *inbuffer = new float[chunksize];
   float *outbuffer = new float[chunksize];
 
-  jack.onProcess = [&sine, &sone, &chunksize, &jack, &inbuffer, &outbuffer]
-  (jack_default_audio_sample_t* inBuf, jack_default_audio_sample_t* outBuf, jack_nframes_t nframes){
+  do{
     jack.readSamples(inbuffer,chunksize);
     for(unsigned int x=0; x<chunksize; x++)
     {
@@ -33,7 +26,17 @@ int main(int argc, char **argv){
       outbuffer[2*x+1]= sone.genNextSample();
     }
     jack.writeSamples(outbuffer,chunksize*2);
-  };
-jack.end();
+  } while(running);
+
+}
+
+int main(int argc, char **argv){
+
+  jack.init(argv[0]);
+  jack.autoConnect();
+
+  jack.setNumberOfInputChannels(2);
+  jack.setNumberOfOutputChannels(2);
+
   return 0;
 }
