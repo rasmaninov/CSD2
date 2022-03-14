@@ -10,9 +10,9 @@
 unsigned long chunksize = 2048;
 JackModule jack;
 float samplerate = 44100;
-Chorus chorus(samplerate, 1, 0.2, 3); //samplerate,moddepth,feedback,delayms
+Chorus chorusL(samplerate, 1, 0.2, 3); //samplerate,moddepth,feedback,delayms
+Chorus chorusR(samplerate, 1, 0.2, 7);
 bool running = true;
-float outbuf;
 
 int main(int argc, char **argv){
 
@@ -30,10 +30,8 @@ int main(int argc, char **argv){
     for(unsigned int x=0; x<chunksize; x++)
     {
       // ... your algorithm here
-      chorus.processFrame(inbuffer[x], outbuf);
-
-      outbuffer[2*x]= outbuf * 0.2; //left channel?
-      outbuffer[2*x+1]= outbuf * 0.2; //right channel?
+      chorusL.processFrame(inbuffer[x], outbuffer[2*x]);
+      chorusR.processFrame(inbuffer[x], outbuffer[2*x+1]);
     }
     jack.writeSamples(outbuffer,chunksize*2);
   } while(running);
