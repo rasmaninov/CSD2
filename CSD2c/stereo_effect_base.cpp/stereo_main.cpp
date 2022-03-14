@@ -5,24 +5,22 @@
 #include <thread>
 #include <unistd.h>
 #include <iostream>
+#include "delay.h"
 
 unsigned long chunksize = 2048;
 JackModule jack;
 float samplerate = 44100;
-Sine sine(440, samplerate);
-Sine sone(220, samplerate);
+Delay delayL(samplerate, 0.99, 0.7, 200); //samplerate,moddepth,feedback,delayms
+Delay delayR(samplerate, 0.99, 0.7, 400);
 bool running = true;
-//
-// static void filter(){
-//
-// }
-
+float outbufL;
+float outbufR;
 int main(int argc, char **argv){
 
   jack.init(argv[0]);
   jack.autoConnect();
 
-  jack.setNumberOfInputChannels(2);
+  jack.setNumberOfInputChannels(1);
   jack.setNumberOfOutputChannels(2);
 
   float *inbuffer = new float[chunksize];
@@ -33,8 +31,10 @@ int main(int argc, char **argv){
     for(unsigned int x=0; x<chunksize; x++)
     {
       // ... your algorithm here
-      outbuffer[2*x]= sine.genNextSample();
-      outbuffer[2*x+1]= sone.genNextSample();
+      delayL.processFrame(inbuffer[x], outbufL);
+      delayR.processFrame(inbuffer[x], outbufR);
+      outbuffer[2*x]= outbufL; //left channel?
+      outbuffer[2*x+1]= outbufR; //right channel?
     }
     jack.writeSamples(outbuffer,chunksize*2);
   } while(running);
