@@ -3,7 +3,7 @@
 
 Chorus::Chorus(float samplerate, float modDepth, float feedback, float modSpeed) : Effect(),
   m_modDepth(modDepth),
-  cbuffer(4410000, 22050)
+  cbuffer(44100, 22050)
   {
   this->feedback = feedback;
   this->samplerate = samplerate;
