@@ -9,36 +9,29 @@ Chorus::Chorus(float samplerate, float modDepth, float feedback, float delayInMS
   this->samplerate = samplerate;
   delayMS(delayInMS);
 
-  m_oscL = new Sine(1, samplerate);
-  m_oscR = new Sine(1, samplerate);
+  m_osc = new Sine(1, samplerate);
 
 }
 
 Chorus::~Chorus() {
-  delete m_oscL;
-  delete m_oscR;
+  delete m_osc;
 
-  m_oscL = nullptr;
-  m_oscR = nullptr;
+  m_osc = nullptr;
 
 }
 
-void Chorus::applyEffect(float& input, float& outputL, float& outputR){
+void Chorus::applyEffect(float& input, float& output){
 
-  delaytime = (m_oscL->genNextSample() + 5);
+  delaytime = (m_osc->genNextSample() + 5);
   delayMS(delaytime);
-  outputL = m_modSignal + input;
+  output = m_modSignal + input;
 
-  delaytime = (m_oscR->genNextSample() + 5);
-  delayMS(delaytime);
-  outputR = input * m_modSignal;
-
-  cbuffer.write(input + (outputL) * feedback);
+  cbuffer.write(input + output * feedback);
 
   m_modSignal = cbuffer.read() ;
 
-  m_modSignal *= m_modDepth;
-  m_modSignal += 1.0 - m_modDepth;
+  // m_modSignal *= m_modDepth;
+  // m_modSignal += 1.0 - m_modDepth;
 
 }
 

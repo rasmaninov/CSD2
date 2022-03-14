@@ -12,8 +12,7 @@ JackModule jack;
 float samplerate = 44100;
 Chorus chorus(samplerate, 1, 0.2, 3); //samplerate,moddepth,feedback,delayms
 bool running = true;
-float outbufL;
-float outbufR;
+float outbuf;
 
 int main(int argc, char **argv){
 
@@ -31,10 +30,10 @@ int main(int argc, char **argv){
     for(unsigned int x=0; x<chunksize; x++)
     {
       // ... your algorithm here
-      chorus.processFrame(inbuffer[x], outbufL, outbufR);
+      chorus.processFrame(inbuffer[x], outbuf);
 
-      outbuffer[2*x]= outbufL * 0.2; //left channel?
-      outbuffer[2*x+1]= outbufR * 0.2; //right channel?
+      outbuffer[2*x]= outbuf * 0.2; //left channel?
+      outbuffer[2*x+1]= outbuf * 0.2; //right channel?
     }
     jack.writeSamples(outbuffer,chunksize*2);
   } while(running);

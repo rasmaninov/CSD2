@@ -8,14 +8,14 @@ public:
   Effect(float dryWet = 0.5);
   virtual ~Effect();
 
-  float processFrame(float& input, float& outputL, float& outputR);
+  float processFrame(float& input, float& output);
 
   float getSample();
   void setDryWet(float dryWet);
 
 protected:
 
-  virtual void applyEffect(float& input, float& outputL, float& outputR) = 0;
+  virtual void applyEffect(float& input, float& output) = 0;
 
 private:
   float dryWet;

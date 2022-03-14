@@ -9,14 +9,13 @@ public:
   Chorus(float samplerate, float modDepth, float feedback, float delayInMS);
   ~Chorus();
 
-  void applyEffect(float& input, float& outputL, float& outputR) override;
+  void applyEffect(float& input, float& output) override;
   void delayMS(float delayInSamps);
   void delaySamps(float delaySamps);
   void setFeedback(float feedback1);
 
 protected:
-  Oscillator* m_oscL;
-  Oscillator* m_oscR;
+  Oscillator* m_osc;
   float m_modDepth;
   float m_modSignal = 0;
   float feedback;
