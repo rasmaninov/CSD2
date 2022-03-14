@@ -34,7 +34,7 @@ int main(int argc, char **argv){
     {
       // ... your algorithm here
       float delaytime;
-      delaytime = (sine.genNextSample() + 5) * 2;
+      delaytime = (sine.genNextSample() + 5);
       delayR.delayMS(delaytime);
 
       delayL.processFrame(inbuffer[x], outbufL);
