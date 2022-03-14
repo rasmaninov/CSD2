@@ -5,17 +5,17 @@ class Effect
 {
 public:
 
-  Effect(float dryWet = 1.0);
+  Effect(float dryWet = 0.5);
   virtual ~Effect();
 
-  float processFrame(float& input, float& output);
+  float processFrame(float& input, float& outputL, float& outputR);
 
   float getSample();
   void setDryWet(float dryWet);
 
 protected:
 
-  virtual void applyEffect(float& input, float& output) = 0;
+  virtual void applyEffect(float& input, float& outputL, float& outputR) = 0;
 
 private:
   float dryWet;

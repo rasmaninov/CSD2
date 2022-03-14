@@ -7,11 +7,12 @@ Effect::Effect(float dryWet){
 Effect::~Effect(){
 }
 
-float Effect::processFrame(float& input, float& output){
-  applyEffect(input, output);
-  output = input * wetDry + output * dryWet;
-
-  return output;
+float Effect::processFrame(float& input, float& outputL, float& outputR){
+  applyEffect(input, outputL, outputR);
+  outputL = input * wetDry + outputL * dryWet;
+  outputR = input * wetDry + outputR * dryWet;
+  return outputL;
+  return outputR;
 }
 
 float Effect::getSample(){

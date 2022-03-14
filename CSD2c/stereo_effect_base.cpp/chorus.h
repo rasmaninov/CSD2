@@ -1,18 +1,22 @@
 #pragma once
 #include "fxbase.h"
 #include "cbuffer.h"
+#include "oscillator.h"
 
-class Delay : public Effect
+class Chorus : public Effect
 {
 public:
-  Delay(float samplerate, float modDepth, float feedback, float delayInMS);
-  ~Delay();
+  Chorus(float samplerate, float modDepth, float feedback, float delayInMS);
+  ~Chorus();
 
-  void applyEffect(float& input, float& output) override;
+  void applyEffect(float& input, float& outputL, float& outputR) override;
   void delayMS(float delayInSamps);
   void delaySamps(float delaySamps);
   void setFeedback(float feedback1);
+
 protected:
+  Oscillator* m_oscL;
+  Oscillator* m_oscR;
   float m_modDepth;
   float m_modSignal = 0;
   float feedback;
@@ -21,5 +25,7 @@ protected:
   Cbuffer cbuffer;
   float delayInMS;
   float delayInSamps;
+
+  float delaytime;
 
 };

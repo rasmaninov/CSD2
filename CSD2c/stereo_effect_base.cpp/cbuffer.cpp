@@ -42,5 +42,4 @@ void Cbuffer::setNumSamplesDelay(float delayInSamps){
   this->numSamplesDelay =  floor(delayInSamps);
   this->readH = writeH - numSamplesDelay + size;
   readH = wrapH(readH);
-  std::cout << readH << std::endl;
 }
