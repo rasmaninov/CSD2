@@ -6,7 +6,7 @@
 class Chorus : public Effect
 {
 public:
-  Chorus(float samplerate, float modDepth, float feedback, float delayInMS);
+  Chorus(float samplerate, float modDepth, float feedback, float modSpeed);
   ~Chorus();
 
   void applyEffect(float& input, float& output) override;
@@ -21,6 +21,7 @@ protected:
   float feedback;
   float feedback1;
   float samplerate;
+  float modSpeed;
   Cbuffer cbuffer;
   float delayInMS;
   float delayInSamps;

@@ -1,15 +1,15 @@
 #include "chorus.h"
 #include "sine.h"
 
-Chorus::Chorus(float samplerate, float modDepth, float feedback, float delayInMS ) : Effect(),
+Chorus::Chorus(float samplerate, float modDepth, float feedback, float modSpeed) : Effect(),
   m_modDepth(modDepth),
   cbuffer(4410000, 22050)
   {
   this->feedback = feedback;
   this->samplerate = samplerate;
-  delayMS(delayInMS);
+  delayMS(0);
 
-  m_osc = new Sine(1, samplerate);
+  m_osc = new Sine(modSpeed, samplerate);
 
 }
 
@@ -22,11 +22,11 @@ Chorus::~Chorus() {
 
 void Chorus::applyEffect(float& input, float& output){
 
-  delaytime = (m_osc->genNextSample() + 5);
+  delaytime = (m_osc->genNextSample() + 5) ; //add amount changer
   delayMS(delaytime);
   output = m_modSignal + input;
 
-  cbuffer.write(input + output * feedback);
+  cbuffer.write((input + output * feedback) * 0.5);
 
   m_modSignal = cbuffer.read() ;
 

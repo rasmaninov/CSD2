@@ -5,7 +5,7 @@ class Effect
 {
 public:
 
-  Effect(float dryWet = 0.5);
+  Effect(float dryWet = 1);
   virtual ~Effect();
 
   float processFrame(float& input, float& output);

@@ -10,8 +10,8 @@
 unsigned long chunksize = 2048;
 JackModule jack;
 float samplerate = 44100;
-Chorus chorusL(samplerate, 1, 0.2, 3); //samplerate,moddepth,feedback,delayms
-Chorus chorusR(samplerate, 1, 0.2, 7);
+Chorus chorusL(samplerate, 1, 0, 70); //samplerate,moddepth,feedback,modSpeed
+Chorus chorusR(samplerate, 1, 0, 71);
 bool running = true;
 
 int main(int argc, char **argv){
