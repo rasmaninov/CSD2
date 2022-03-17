@@ -6,13 +6,18 @@
 #include <iostream>
 #include "chorus.h"
 #include "sine.h"
+#include "filter.h"
+#include "saw.h"
 
 unsigned long chunksize = 2048;
 JackModule jack;
 float samplerate = 44100;
-Chorus chorusL(samplerate, 1, 0, 3); //samplerate,moddepth,feedback,modSpeed
-Chorus chorusR(samplerate, 1, 0, 7);
+// Chorus chorusL(samplerate, 1, 0, 3); //samplerate,moddepth,feedback,modSpeed
+// Chorus chorusR(samplerate, 1, 0, 7);
+Filter filter(samplerate, 0.5);
 bool running = true;
+Saw saw(220, samplerate);
+float throughbuf1;
 
 int main(int argc, char **argv){
   jack.init(argv[0]);
@@ -29,8 +34,12 @@ int main(int argc, char **argv){
     for(unsigned int x=0; x<chunksize; x++)
     {
       // ... your algorithm here
-      chorusL.processFrame(inbuffer[x], outbuffer[2*x]);
-      chorusR.processFrame(inbuffer[x], outbuffer[2*x+1]);
+      // chorusL.processFrame(inbuffer[x], outbuffer[2*x]);
+      // chorusR.processFrame(inbuffer[x], outbuffer[2*x+1]);
+      throughbuf1 = saw.genNextSample();
+
+      filter.processFrame(throughbuf1, outbuffer[2*x]);
+      filter.processFrame(throughbuf1, outbuffer[2*x+1]);
     }
     jack.writeSamples(outbuffer,chunksize*2);
   } while(running);
