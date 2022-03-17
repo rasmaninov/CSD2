@@ -22,7 +22,7 @@ Chorus::~Chorus() {
 
 void Chorus::applyEffect(float& input, float& output){
 
-  delaytime = (m_osc->genNextSample() + 5) ; //add amount changer
+  delaytime = (m_osc->genNextSample() + 3) ; //add amount changer
   delayMS(delaytime);
   output = m_modSignal + input;
 
