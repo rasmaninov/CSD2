@@ -15,7 +15,7 @@ float zoff = 0;
 float increment = 0.01;
 
 void setup(){
- size(600,600);
+ size(800,800);
 
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -34,23 +34,23 @@ void setup(){
 void draw(){
   background(0);
   yoff = 0;
+  // updating vector angles by offsets
   for(int y = 0; y < rows; y++){
     xoff = 0;
     for(int x = 0; x < cols; x++){
       int index = x + y * cols;
-
       float angle = noise(xoff, yoff, zoff) * TWO_PI * 4;
       PVector v = PVector.fromAngle(angle);
       flowField[index] = v;
       v.setMag(0.02);
       xoff += increment;
 
+      // drawing all vector angles
       stroke(255);
       push();
       translate(x * scale, y * scale);
       rotate(v.heading());
-      strokeWeight(0.1);
-
+      strokeWeight(1);
       line (0,0,scale,0);
       pop();
 
