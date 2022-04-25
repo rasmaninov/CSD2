@@ -5,6 +5,8 @@
 *.asd
 *.csv
 *.png
+*.mov
+*.gif
 
 Instrument
 instrument
