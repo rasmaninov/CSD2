@@ -79,14 +79,14 @@ void draw(){
       //check if it should draw entity, then draw and update
       //positions
       if(ent1.check(Xone, Yone, x, y, checked)){
-        pos = ent1.display(v.x, v.y, 70, pos, 40);
+        pos = ent1.display(v, 70, pos, 40);
         Xone = pos.x;
         Yone = pos.y;
 
       }
 
       if(ent2.check(Xtwo, Ytwo, x, y, checked)){
-        ent2.display(v.x, v.y, 20, pos2, 60);
+        ent2.display(v, 20, pos2, 60);
         Xtwo = pos2.x;
         Ytwo = pos2.y;
       }
@@ -103,7 +103,7 @@ void draw(){
 
 
 class Entity {
-
+  PVector s;//speed in display?
   float xpos, ypos;
   float Xone, Yone;
 
@@ -124,13 +124,13 @@ class Entity {
     return checked;
   }
 
-  PVector display(float vx, float vy, float kleur, PVector pos, float size){
+  PVector display(PVector s, float kleur, PVector pos, float size){
       pos = new PVector(0,0);
 
       fill(kleur);
       strokeWeight(5);
-      xpos += vx;
-      ypos += vy;
+      xpos += s.x;
+      ypos += s.y;
       ellipse(xpos, ypos, size, size);
 
       if(xpos >= 775){
@@ -143,7 +143,7 @@ class Entity {
       } else if(ypos <= 25){
         ypos = 775;
       }
-
+      // pos = position;
       pos.set(xpos,ypos);
       return pos;
   }
