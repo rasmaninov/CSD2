@@ -1,6 +1,5 @@
 // processing-java --sketch=/Users/rahsaan/Documents/CSD2/CSD2D/SYSTEM  --run
 // todo : seeding food
-// todo : wrapping function
 // todo ; body building
 // todo ; sound????
 
@@ -9,7 +8,7 @@ PVector[] flowField;
 int scale = 20;
 int cols;
 int rows;
-// boolean Testflow = true;
+boolean Testflow = true;
 
 float Xone = 500;
 float Yone = 500;
@@ -22,17 +21,13 @@ float yoff = 0;
 float zoff = 0;
 float increment = 0.01;
 
-Entity  ent1 = new Entity(Xone, Yone, 100);
-
-Entity  ent2 = new Entity(Xtwo, Ytwo, 20);
+Entity  ent1 = new Entity(Xone, Yone);
+Entity  ent2 = new Entity(Xtwo, Ytwo);
 
 PVector pos = new PVector(0,0);
 PVector pos2 = new PVector(0,0);
 
-
-boolean checked1;
-boolean checked2;
-
+boolean checked;
 
 
 
@@ -41,7 +36,7 @@ void setup(){
 
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
- surface.setLocation(1500, 0);
+ surface.setLocation(500, 0);
 
  cols = floor(width / scale);
  rows = floor(height / scale);
@@ -71,7 +66,7 @@ void draw(){
       xoff += increment;
 
       // drawing all vector angles
-      // if(Testflow == true){
+      if(Testflow == true){
         stroke(255,70);
         push();
         translate(x * scale, y * scale);
@@ -79,23 +74,22 @@ void draw(){
         strokeWeight(1);
         line (0,0,scale,0);
         pop();
-      // }
+      }
 
       //check if it should draw entity, then draw and update
       //positions
-      if(ent1.check(Xone, Yone, x, y, checked1)){
-        pos = ent1.display(v.x, v.y, 50, pos);
+      if(ent1.check(Xone, Yone, x, y, checked)){
+        pos = ent1.display(v.x, v.y, 70, pos, 40);
         Xone = pos.x;
         Yone = pos.y;
 
       }
-  checked1 = false;
-      if(ent2.check(Xtwo, Ytwo, x, y, checked2)){
-        ent2.display(v.x, v.y, 50, pos2);
+
+      if(ent2.check(Xtwo, Ytwo, x, y, checked)){
+        ent2.display(v.x, v.y, 20, pos2, 60);
         Xtwo = pos2.x;
         Ytwo = pos2.y;
       }
-      checked2 = false;
 
     }
 
@@ -111,16 +105,12 @@ void draw(){
 class Entity {
 
   float xpos, ypos;
-  float col;
   float Xone, Yone;
 
 
-  Entity(float x, float y, float colr){
+  Entity(float x, float y){
     xpos = x;
     ypos = y;
-    col = colr;
-    // fill(colr);
-
   }
 
   boolean check(float Xone, float Yone, float x, float y, boolean checked){
@@ -134,14 +124,14 @@ class Entity {
     return checked;
   }
 
-  PVector display(float vx, float vy, float kleur, PVector pos){
+  PVector display(float vx, float vy, float kleur, PVector pos, float size){
       pos = new PVector(0,0);
 
       fill(kleur);
       strokeWeight(5);
       xpos += vx;
       ypos += vy;
-      ellipse(xpos,ypos,50,50);
+      ellipse(xpos, ypos, size, size);
 
       if(xpos >= 775){
         xpos = 25;
