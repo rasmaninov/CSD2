@@ -33,7 +33,7 @@ boolean checked;
 
 void setup(){
  size(800,800);
-
+//initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
  surface.setLocation(500, 0);
@@ -54,7 +54,7 @@ void draw(){
 
   background(0, 0, 0, 30);
   yoff = 0;
-  // updating vector angles by offsets
+  // updating vector angles by noise offsets
   for(int y = 0; y < rows; y++){
     xoff = 0;
     for(int x = 0; x < cols; x++){
@@ -78,13 +78,14 @@ void draw(){
 
       //check if it should draw entity, then draw and update
       //positions
+      v.setMag(2);
       if(ent1.check(Xone, Yone, x, y, checked)){
         pos = ent1.display(v, 70, pos, 40);
         Xone = pos.x;
         Yone = pos.y;
 
       }
-
+      v.setMag(1);
       if(ent2.check(Xtwo, Ytwo, x, y, checked)){
         ent2.display(v, 20, pos2, 60);
         Xtwo = pos2.x;
@@ -96,58 +97,5 @@ void draw(){
     yoff += increment;
     zoff += 0.00007;
   }
-
-
-}
-
-
-
-class Entity {
-  PVector s;//speed in display?
-  float xpos, ypos;
-  float Xone, Yone;
-
-
-  Entity(float x, float y){
-    xpos = x;
-    ypos = y;
-  }
-
-  boolean check(float Xone, float Yone, float x, float y, boolean checked){
-    if(Xone >= (scale * (x-1)) + scale && Xone <= scale * (x+1)){
-      if(Yone >= (40 * (y - 1)) + 40 && Yone <= 40 * (y+1)){
-        checked = true;
-      }
-    } else {
-       checked = false;
-    }
-    return checked;
-  }
-
-  PVector display(PVector s, float kleur, PVector pos, float size){
-      pos = new PVector(0,0);
-
-      fill(kleur);
-      strokeWeight(5);
-      xpos += s.x;
-      ypos += s.y;
-      ellipse(xpos, ypos, size, size);
-
-      if(xpos >= 775){
-        xpos = 25;
-      } else if(xpos <= 25){
-        xpos = 775;
-      }
-      if(ypos >= 775){
-        ypos = 25;
-      } else if(ypos <= 25){
-        ypos = 775;
-      }
-      // pos = position;
-      pos.set(xpos,ypos);
-      return pos;
-  }
-
-
 
 }
