@@ -3,18 +3,17 @@
 
 class Entity {
   PVector s;//speed in display?
-  float xpos, ypos;
-  float Xone, Yone;
+  PVector spawn;
   PVector position;
+  PVector tempPos;
 
-  Entity(float x, float y){
-    xpos = x;
-    ypos = y;
+  Entity(PVector spawn){
+    tempPos = spawn;
   }
 
-  boolean check(float Xone, float Yone, float x, float y, boolean checked){
-    if(Xone >= (scale * (x-1)) + scale && Xone <= scale * (x+1)){
-      if(Yone >= (40 * (y - 1)) + 40 && Yone <= 40 * (y+1)){
+  boolean check(PVector position, float x, float y, boolean checked){
+    if(position.x >= (scale * (x-1)) + scale && position.x <= scale * (x+1)){
+      if(position.y >= (40 * (y - 1)) + 40 && position.y <= 40 * (y+1)){
         checked = true;
       }
     } else {
@@ -23,29 +22,29 @@ class Entity {
     return checked;
   }
 
-  PVector display(PVector s, float kleur, PVector pos, float size){
-      pos = new PVector(0,0);
-      float r = size/2 + 5; // r = radius + strokeweight
-      fill(kleur);
-      strokeWeight(5);
-      xpos += s.x;
-      ypos += s.y;
-      ellipse(xpos, ypos, size, size);
+  PVector display(PVector s, float kleur, PVector posNew, float size){
+    posNew = new PVector(0,0);
 
-      if(xpos >= width - r){
-        xpos = (width - r);
-      } else if(xpos <= r){
-        xpos = r ;
-      }
-      if(ypos >= width-r){
-        ypos = width-r;
-      } else if(ypos <= r){
-        ypos = r;
-      } // magic numbers weghalen
-      //wrapping secuur??>?
-      // pos = position;
-      pos.set(xpos,ypos);
-      return pos;
+    float r = size/2 + 5; // r = radius + strokeweight = radius
+    fill(kleur);
+    strokeWeight(5);
+    tempPos.add(s);
+
+    ellipse(tempPos.x, tempPos.y, size, size);
+    // checking if between bounds, update this function!!!!
+    if(tempPos.x >= width - r){
+      tempPos.x = (width - r);
+    } else if(tempPos.x <= r){
+      tempPos.x = r ;
+    }
+    if(tempPos.y >= width-r){
+      tempPos.y = width-r;
+    } else if(tempPos.y <= r){
+      tempPos.y = r;
+    }
+
+    posNew = tempPos;
+    return posNew;
   }
 
   void collide() {

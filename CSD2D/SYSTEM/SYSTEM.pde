@@ -10,10 +10,11 @@ int cols;
 int rows;
 boolean Testflow = true;
 
-float Xone = 500;
-float Yone = 500;
-float Xtwo = 100;
-float Ytwo = 100;
+PVector positionOne = new PVector(0, 0);
+PVector spawnPosOne = new PVector(700, 500);
+
+PVector positionTwo = new PVector(0, 0);
+PVector spawnPosTwo = new PVector(250, 250);
 
 // noise offsets
 float xoff = 0;
@@ -21,8 +22,8 @@ float yoff = 0;
 float zoff = 0;
 float increment = 0.01;
 
-Entity  ent1 = new Entity(Xone, Yone);
-Entity  ent2 = new Entity(Xtwo, Ytwo);
+Entity  ent1 = new Entity(spawnPosOne);
+Entity  ent2 = new Entity(spawnPosTwo);
 
 PVector pos = new PVector(0,0);
 PVector pos2 = new PVector(0,0);
@@ -36,14 +37,14 @@ void setup(){
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
- surface.setLocation(500, 0);
+ surface.setLocation(200,0);
 
  cols = floor(width / scale);
  rows = floor(height / scale);
 
  flowField = new PVector[cols * rows];
 
- frameRate(30);
+ frameRate(60);
  background(0);
  println("go");
 }
@@ -78,18 +79,14 @@ void draw(){
 
       //check if it should draw entity, then draw and update
       //positions
-      v.setMag(2);
-      if(ent1.check(Xone, Yone, x, y, checked)){
-        pos = ent1.display(v, 70, pos, 40);
-        Xone = pos.x;
-        Yone = pos.y;
-
+      v.setMag(0.5);
+      if(ent1.check(positionOne,x, y, checked)){
+        positionOne = ent1.display(v, 70, pos, 40); // vector, color, new position(returned), size
       }
+
       v.setMag(1);
-      if(ent2.check(Xtwo, Ytwo, x, y, checked)){
-        ent2.display(v, 20, pos2, 60);
-        Xtwo = pos2.x;
-        Ytwo = pos2.y;
+      if(ent2.check(positionTwo, x, y, checked)){
+        positionTwo = ent2.display(v, 20, pos2, 60);
       }
 
     }
