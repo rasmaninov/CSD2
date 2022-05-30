@@ -6,6 +6,10 @@ class Entity {
   PVector spawn;
   PVector position;
   PVector tempPos;
+  PVector displace;
+  float d;
+  PVector v;
+  float life = 10000;
 
   Entity(PVector spawn){
     tempPos = spawn;
@@ -47,9 +51,40 @@ class Entity {
     return posNew;
   }
 
-  void collide() {
 
+  boolean collisionDetection(float xA, float yA, float xB, float yB){
+    d = dist(xA, yA, xB, yB);
+    if(d <= r1+r2){
+      hit = true;
+    } else {
+      hit = false;
+    }
+    return hit;
   }
 
 
+  PVector collide(float r1, float r2, PVector displace){
+    displace = new PVector(0,0);
+    if(d <= r1+r2){
+      float a = random(40) - 20;
+      float b = random(40) - 20;
+    displace.set(a, b);
+  }
+  return displace;
+  }
+
+  float life(float amount){
+    life += amount;
+    return life;
+  }
+
+  boolean lifeCheck(float life){
+    boolean state;
+    if(life >= 0){
+      state = true;
+    } else {
+      state = false;
+    }
+    return state;
+  }
 }

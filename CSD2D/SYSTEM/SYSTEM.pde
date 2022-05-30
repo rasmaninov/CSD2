@@ -30,14 +30,19 @@ PVector pos2 = new PVector(0,0);
 
 boolean checked;
 
+float r1 = 40;
+float r2 = 60;
+PVector displace;
+boolean hit = false;
+float health1, health2;
 
 
 void setup(){
- size(800,800);
+ size(400,400);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
- surface.setLocation(200,0);
+ surface.setLocation(1500,400);
 
  cols = floor(width / scale);
  rows = floor(height / scale);
@@ -77,22 +82,58 @@ void draw(){
         pop();
       }
 
+
+      hit = ent1.collisionDetection(positionOne.x, positionOne.y, positionTwo.x, positionTwo.y);
+      displace = ent1.collide(r1, r2, displace);
+
       //check if it should draw entity, then draw and update
       //positions
-      v.setMag(0.5);
-      if(ent1.check(positionOne,x, y, checked)){
-        positionOne = ent1.display(v, 70, pos, 40); // vector, color, new position(returned), size
+      v.setMag(1);
+      if(hit){
+        v.add(displace);
+        v.setMag(2);
       }
 
-      v.setMag(1);
-      if(ent2.check(positionTwo, x, y, checked)){
-        positionTwo = ent2.display(v, 20, pos2, 60);
+      if(ent1.lifeCheck(health1 )){
+        if(ent1.check(positionOne,x, y, checked)){
+            positionOne = ent1.display(v, 70, pos, r1*2); // vector, color, new position(returned), size
+        }
+      } else {
+        noLoop();
       }
+
+
+
+      displace = ent2.collide(r1, r2, displace);
+
+      v.setMag(1);
+      if(hit){
+        v.add(displace);
+        v.setMag(2);
+      }
+
+      if(ent2.lifeCheck(health2)){
+        if(ent2.check(positionTwo, x, y, checked)){
+          positionTwo = ent2.display(v, 50, pos2, r2*2);
+        }
+      } else {
+        noLoop();
+      }
+
+
+
 
     }
 
-    yoff += increment;
-    zoff += 0.00007;
-  }
+      yoff += increment;
+      zoff += 0.00007;
 
+  }
+  if(hit){
+    health2 = ent2.life(-random(20));
+    health1 = ent1.life(-random(20));
+    println("h1", health1);
+    println("h2", health2);
+
+  }
 }
