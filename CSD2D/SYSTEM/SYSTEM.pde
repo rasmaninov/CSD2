@@ -26,6 +26,13 @@ float increment = 0.01;
 Entity  ent1 = new Entity(spawnPosOne);
 Entity  ent2 = new Entity(spawnPosTwo);
 
+float color1 = 255;
+float color2 = 255;
+
+int state1 = 0;
+int state2 = 0;
+
+
 PVector pos = new PVector(0,0);
 PVector pos2 = new PVector(0,0);
 
@@ -39,7 +46,7 @@ float health1, health2;
 
 
 void setup(){
- size(400,400);
+ size(600, 600);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -49,6 +56,9 @@ void setup(){
  rows = floor(height / scale);
 
  flowField = new PVector[cols * rows];
+
+ health1 = ent1.life(0);
+ health2 = ent2.life(0);
 
  frameRate(60);
  background(0);
@@ -94,10 +104,13 @@ void draw(){
         v.add(displace);
         v.setMag(2);
       }
-
+      color1 = health1;
+      if(color1 >= 255){
+        color1 = 255;
+      }
       if(ent1.lifeCheck(health1 )){
         if(ent1.check(positionOne,x, y, checked)){
-            positionOne = ent1.display(v, health1, pos, r1*2); // vector, color, new position(returned), size
+            positionOne = ent1.display(v, color1, pos, r1*2); // vector, color, new position(returned), size
         }
       }
          // vector, color, new position(returned), size
@@ -109,10 +122,13 @@ void draw(){
         v.add(displace);
         v.setMag(2);
       }
-
+      color2 = health2;
+      if(color2 >= 255){
+        color2 = 255;
+      }
       if(ent2.lifeCheck(health2)){
         if(ent2.check(positionTwo, x, y, checked)){
-          positionTwo = ent2.display(v, health2, pos2, r2*2);
+          positionTwo = ent2.display(v, color2, pos2, r2*2);
         }
       }
        // vector, color, new position(returned), size
@@ -132,27 +148,53 @@ void draw(){
 
 
   if(ent1.lifeCheck(health1) == false && frameCount % 500 == 0){
-    health1 = ent1.life(250);
-    println("p1 respawn");
+    health1 = ent1.life(1);
+    state1 = 1;
     positionOne.set(0, 0);
+    println("p1 respawn");
+
+
+
   } else if (ent1.lifeCheck(health1) == false){
     positionOne.set(-400, -400);
   } else if (ent1.life(0) < 255){
-    health1 = ent1.life(1);
+    if (state1 == 1){
+      if(health1 < 250){
+        health1 = ent1.life(3);
+      } else {
+        println("p1 full hp");
+        state1 = 0;
+        health1 = ent1.life(1);
+      }
+    }
+
   }
 
+
   if(ent2.lifeCheck(health2) == false && frameCount % 500 == 150){
-    health2 = ent2.life(250);
+    health2 = ent2.life(1);
+    state2 = 1;
     positionTwo.set(400, 400);
     println("p2 respawn");
+
+
 
   } else if (ent2.lifeCheck(health2) == false){
     positionTwo.set(-200, -200);
   } else if (ent2.life(0) < 255) {
-    health2 = ent2.life(1);
+    if (state2 == 1){
+      if(health2 < 250){
+        health2 = ent2.life(3);
+      } else {
+        println("p2 full hp");
+        state2 = 0;
+        health2 = ent2.life(1);
+      }
+    }
+
   }
 
-
-  println(health1, "p1 hp");
-  println(health2, "p2 hp");
+  //
+  // println(health1, "p1 hp");
+  // println(health2, "p2 hp");
 }
