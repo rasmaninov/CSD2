@@ -9,10 +9,15 @@ class Entity {
   PVector displace;
   float d;
   PVector v;
-  float life = 10000;
+  float life = 255;
 
   Entity(PVector spawn){
     tempPos = spawn;
+  }
+
+  void refresh(PVector spawn){
+    tempPos = spawn;
+
   }
 
   boolean check(PVector position, float x, float y, boolean checked){
