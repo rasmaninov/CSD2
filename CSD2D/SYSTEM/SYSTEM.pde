@@ -10,6 +10,7 @@ int cols;
 int rows;
 boolean Testflow = true;
 
+PVector positionZero = new PVector(0,0);
 PVector positionOne = new PVector(0, 0);
 PVector spawnPosOne = new PVector(700, 500);
 
@@ -58,7 +59,7 @@ void setup(){
 
 void draw(){
 
-  background(0, 0, 0, 30);
+  background(0);
   yoff = 0;
   // updating vector angles by noise offsets
   for(int y = 0; y < rows; y++){
@@ -96,13 +97,10 @@ void draw(){
 
       if(ent1.lifeCheck(health1 )){
         if(ent1.check(positionOne,x, y, checked)){
-            positionOne = ent1.display(v, 70, pos, r1*2); // vector, color, new position(returned), size
+            positionOne = ent1.display(v, health1, pos, r1*2); // vector, color, new position(returned), size
         }
-      } else {
-        noLoop();
       }
-
-
+         // vector, color, new position(returned), size
 
       displace = ent2.collide(r1, r2, displace);
 
@@ -114,14 +112,10 @@ void draw(){
 
       if(ent2.lifeCheck(health2)){
         if(ent2.check(positionTwo, x, y, checked)){
-          positionTwo = ent2.display(v, 50, pos2, r2*2);
+          positionTwo = ent2.display(v, health2, pos2, r2*2);
         }
-      } else {
-        noLoop();
       }
-
-
-
+       // vector, color, new position(returned), size
 
     }
 
@@ -129,11 +123,36 @@ void draw(){
       zoff += 0.00007;
 
   }
-  if(hit){
-    health2 = ent2.life(-random(20));
-    health1 = ent1.life(-random(20));
-    println("h1", health1);
-    println("h2", health2);
 
+
+  if(hit){
+    health2 = ent2.life(-random(5));
+    health1 = ent1.life(-random(5));
   }
+
+
+  if(ent1.lifeCheck(health1) == false && frameCount % 500 == 0){
+    health1 = ent1.life(250);
+    println("p1 respawn");
+    positionOne.set(0, 0);
+  } else if (ent1.lifeCheck(health1) == false){
+    positionOne.set(-400, -400);
+  } else if (ent1.life(0) < 255){
+    health1 = ent1.life(1);
+  }
+
+  if(ent2.lifeCheck(health2) == false && frameCount % 500 == 150){
+    health2 = ent2.life(250);
+    positionTwo.set(400, 400);
+    println("p2 respawn");
+
+  } else if (ent2.lifeCheck(health2) == false){
+    positionTwo.set(-200, -200);
+  } else if (ent2.life(0) < 255) {
+    health2 = ent2.life(1);
+  }
+
+
+  println(health1, "p1 hp");
+  println(health2, "p2 hp");
 }
