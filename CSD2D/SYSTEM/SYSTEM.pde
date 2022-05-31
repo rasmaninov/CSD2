@@ -27,7 +27,6 @@ Entity  ent1 = new Entity(spawnPosOne);
 Entity  ent2 = new Entity(spawnPosTwo);
 // float foodstartx = 200;
 // float foodstarty = 350;
-Food food = new Food(200, 350);
 
 float color1 = 255;
 float color2 = 255;
@@ -43,11 +42,14 @@ boolean checked;
 
 float r1 = 40;
 float r2 = 60;
+float r3 = 25;
 PVector displace;
 boolean hit = false;
 float health1, health2;
 PVector mousePosition = new PVector(0,0);
 float x, y;
+Food food = new Food(200, 200, r3);
+
 
 
 void setup(){
@@ -74,10 +76,9 @@ void setup(){
 
 void draw(){
   background(0);
-
+  // food.update();
   mousePosition = food.display();
 
-  println(mousePosition);
   float dx = mousePosition.x - positionOne.x;
   float dy = mousePosition.y - positionOne.y;
   float angle1 = atan2(dy, dx);
@@ -85,13 +86,21 @@ void draw(){
 
   x = mousePosition.x - cos(angle1) * 80;
   y = mousePosition.y - sin(angle1) * 80;
-  push();
-  translate(x,y);
-  rotate(angle1);
-  strokeWeight(20);
-  stroke(255);
-  line(0,0,80,0);
-  pop();
+
+  //numbers at the end specify which entity
+  food.update(food.collisionDetection(mousePosition.x, mousePosition.y, positionOne.x ,positionOne.y,  r1), 1);
+  food.update(food.collisionDetection(mousePosition.x, mousePosition.y, positionTwo.x ,positionTwo.y,  r2), 2);
+
+
+
+  // food.collisionDetection();
+  // push();
+  // translate(x,y);
+  // rotate(angle1);
+  // strokeWeight(20);
+  // stroke(255);
+  // line(0,0,80,0);
+  // pop();
 
 
   yoff = 0;
@@ -225,6 +234,6 @@ void draw(){
   }
 
   //
-  // println(health1, "p1 hp");
-  // println(health2, "p2 hp");
+  println(health1, "p1 hp");
+  println(health2, "p2 hp");
 }
