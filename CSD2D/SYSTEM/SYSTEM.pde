@@ -25,6 +25,9 @@ float increment = 0.01;
 
 Entity  ent1 = new Entity(spawnPosOne);
 Entity  ent2 = new Entity(spawnPosTwo);
+// float foodstartx = 200;
+// float foodstarty = 350;
+Food food = new Food(200, 350);
 
 float color1 = 255;
 float color2 = 255;
@@ -43,10 +46,12 @@ float r2 = 60;
 PVector displace;
 boolean hit = false;
 float health1, health2;
+PVector mousePosition = new PVector(0,0);
+float x, y;
 
 
 void setup(){
- size(600, 600);
+ size(400, 400);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -68,8 +73,27 @@ void setup(){
 
 
 void draw(){
-
   background(0);
+
+  mousePosition = food.display();
+
+  println(mousePosition);
+  float dx = mousePosition.x - positionOne.x;
+  float dy = mousePosition.y - positionOne.y;
+  float angle1 = atan2(dy, dx);
+  PVector foodPosition = PVector.fromAngle(angle1);
+
+  x = mousePosition.x - cos(angle1) * 80;
+  y = mousePosition.y - sin(angle1) * 80;
+  push();
+  translate(x,y);
+  rotate(angle1);
+  strokeWeight(20);
+  stroke(255);
+  line(0,0,80,0);
+  pop();
+
+
   yoff = 0;
   // updating vector angles by noise offsets
   for(int y = 0; y < rows; y++){
@@ -94,12 +118,14 @@ void draw(){
       }
 
 
+
+
       hit = ent1.collisionDetection(positionOne.x, positionOne.y, positionTwo.x, positionTwo.y);
       displace = ent1.collide(r1, r2, displace);
 
       //check if it should draw entity, then draw and update
       //positions
-      v.setMag(1);
+      v.setMag(1.3);
       if(hit){
         v.add(displace);
         v.setMag(2);
@@ -117,7 +143,7 @@ void draw(){
 
       displace = ent2.collide(r1, r2, displace);
 
-      v.setMag(1);
+      v.setMag(0.7);
       if(hit){
         v.add(displace);
         v.setMag(2);
@@ -164,8 +190,10 @@ void draw(){
       } else {
         println("p1 full hp");
         state1 = 0;
-        health1 = ent1.life(1);
+        health1 = ent1.life(2);
       }
+    } else {
+      health1 = ent1.life(2);
     }
 
   }
@@ -188,8 +216,10 @@ void draw(){
       } else {
         println("p2 full hp");
         state2 = 0;
-        health2 = ent2.life(1);
+        health2 = ent2.life(2);
       }
+    } else {
+        health2 = ent2.life(2);
     }
 
   }

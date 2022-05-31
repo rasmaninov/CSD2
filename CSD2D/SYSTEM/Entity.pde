@@ -15,10 +15,6 @@ class Entity {
     tempPos = spawn;
   }
 
-  void refresh(PVector spawn){
-    tempPos = spawn;
-
-  }
 
   boolean check(PVector position, float x, float y, boolean checked){
     if(position.x >= (scale * (x-1)) + scale && position.x <= scale * (x+1)){
