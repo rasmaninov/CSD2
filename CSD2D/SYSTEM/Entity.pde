@@ -32,7 +32,7 @@ class Entity {
       life = 512;
       angered = true;
 
-    } else if (life <= 100){
+    } else if (life <= 50 || ent1.life(0) <= 0 || ent2.life(0) <= 0){
       angered = false;
 
     }
