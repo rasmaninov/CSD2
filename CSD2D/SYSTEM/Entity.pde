@@ -26,9 +26,15 @@ class Entity {
     } else {
        checked = false;
     }
+
+
     if(life >= 512){
       life = 512;
       angered = true;
+
+    } else if (life <= 100){
+      angered = false;
+
     }
     return checked;
 

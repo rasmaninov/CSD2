@@ -8,7 +8,7 @@ PVector[] flowField;
 int scale = 20;
 int cols;
 int rows;
-boolean Testflow = false;
+boolean Testflow = true;
 
 PVector positionZero = new PVector(0,0);
 PVector positionOne = new PVector(0, 0);
@@ -47,7 +47,7 @@ PVector displace;
 boolean hit = false;
 float health1, health2;
 PVector mousePosition = new PVector(0,0);
-float x1, y1, x2, y2;
+float x1, y1, x2, y2, x3, y3, x4, y4;
 Food food = new Food(200, 200, r3);
 boolean anger1, anger2;
 
@@ -80,15 +80,49 @@ void draw(){
   // food.update();
   mousePosition = food.display();
 
-  float dx1 =  mousePosition.x -positionOne.x;
+
+  // entity one to food vector
+  float dx1 = mousePosition.x - positionOne.x;
   float dy1 = mousePosition.y - positionOne.y;
   float angle1 = atan2(dy1, dx1);
-
+  PVector foodPosition1 = PVector.fromAngle(angle1);
+  // entity two to food vector
   float dx2 = mousePosition.x - positionTwo.x ;
   float dy2 = mousePosition.y - positionTwo.y ;
   float angle2 = atan2(dy2, dx2);
-  PVector foodPosition1 = PVector.fromAngle(angle1);
   PVector foodPosition2 = PVector.fromAngle(angle2);
+  //ent1 to ent2
+  float dx3 = positionOne.x - positionTwo.x;
+  float dy3 = positionOne.y - positionTwo.y;
+  float angle3= atan2(dy3, dx3);
+  PVector ent1ToEnt2 = PVector.fromAngle(angle3);
+  x3 = positionOne.x - cos(angle3) * 80;
+  y3 = positionOne.y - sin(angle3) * 80;
+  if(Testflow == true){
+    push();
+    translate(x3,y3);
+    rotate(angle3);
+    strokeWeight(5);
+    stroke(255);
+    line(0,0,80,0);
+    pop();
+  }
+  //ent2 to ent1
+  float dx4 = positionTwo.x - positionOne.x;
+  float dy4 = positionTwo.y - positionOne.y;
+  float angle4= atan2(dy4, dx4);
+  PVector ent2ToEnt1 = PVector.fromAngle(angle4);
+  x4 = positionTwo.x - cos(angle4) * 80;
+  y4 = positionTwo.y - sin(angle4) * 80;
+  if(Testflow == true){
+    push();
+    translate(x4, y4);
+    rotate(angle4);
+    strokeWeight(5);
+    stroke(255);
+    line(0,0,80,0);
+    pop();
+  }
 
   //numbers at the end specify which entity
 
@@ -153,7 +187,18 @@ void draw(){
       //check if it should draw entity, then draw and update
       //positions
       v.setMag(1.3);
-      if(food.foodAmount >= 150){
+      if(anger1 == true){
+        // println("enraged p1");
+        v = ent2ToEnt1;
+        v.setMag(2);
+        // if(ent1.life(0) <= 50 || ent2.life(0) <= 0){
+        //   anger1 = false;
+        //   anger2 = false;
+        //   println("rage over");
+        //
+        //
+        // }
+      } else if(food.foodAmount >= 150){
         v.add(foodPosition1);
         v.setMag(1.4);
       }
@@ -176,7 +221,18 @@ void draw(){
       displace = ent2.collide(r1, r2, displace);
 
       v.setMag(0.6);
-      if(food.foodAmount >= 150){
+      if(anger2 == true){
+        // println("enraged p2");
+        v = ent1ToEnt2;
+        v.setMag(2);
+        // if(ent2.life(0) <= 50 || ent1.life(0) <= 0){
+        //   anger2 = false;
+        //   anger1 = false;
+        //   println("rage over");
+        //
+        //
+        // }
+      } else if(food.foodAmount >= 150){
         v.add(foodPosition2);
         v.setMag(0.7);
       }

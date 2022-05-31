@@ -49,7 +49,7 @@ class Food {
     if(foodAmount >= 255){
       foodAmount = 255;
     }
-    println(foodAmount + "foodAmount");
+    // println(foodAmount + "foodAmount");
   }
 
   PVector display(){
