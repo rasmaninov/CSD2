@@ -10,6 +10,7 @@ class Entity {
   float d;
   PVector v;
   float life = 255;
+  float armor = 0;
 
   Entity(PVector spawn){
     tempPos = spawn;
@@ -29,9 +30,15 @@ class Entity {
 
   PVector display(PVector s, float kleur, PVector posNew, float size){
     posNew = new PVector(0,0);
-
     float r = size/2 + 5; // r = radius + strokeweight = radius
     fill(kleur);
+    if(life > 255){
+      armor = life - 255;
+      if(armor > 255){
+        armor = 255;
+      }
+    }
+    stroke(255, 255 - armor, 255 - armor, 200);
     strokeWeight(5);
     tempPos.add(s);
 

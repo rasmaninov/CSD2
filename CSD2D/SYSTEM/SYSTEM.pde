@@ -8,7 +8,7 @@ PVector[] flowField;
 int scale = 20;
 int cols;
 int rows;
-boolean Testflow = false;
+boolean Testflow = true;
 
 PVector positionZero = new PVector(0,0);
 PVector positionOne = new PVector(0, 0);
@@ -53,7 +53,7 @@ Food food = new Food(200, 200, r3);
 
 
 void setup(){
- size(800,800);
+ size(400,400);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -153,8 +153,8 @@ void draw(){
       //positions
       v.setMag(1.3);
       if(food.foodAmount >= 150){
-        v = foodPosition1;
-        v.setMag(1.5);
+        v.add(foodPosition1);
+        v.setMag(1.2);
       }
       if(hit){
         v.add(displace);
@@ -175,8 +175,8 @@ void draw(){
 
       v.setMag(0.7);
       if(food.foodAmount >= 150){
-        v = foodPosition2;
-        v.setMag(1);
+        v.add(foodPosition2);
+        v.setMag(0.8);
       }
       if(hit){
         v.add(displace);

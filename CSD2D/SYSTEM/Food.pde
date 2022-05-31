@@ -30,7 +30,6 @@ class Food {
   void update(boolean hit, float player){
     if(hit){
 
-
       if(foodAmount > 0){
         foodAmount -= 1;
         if(player == 1){
@@ -40,7 +39,7 @@ class Food {
         }
       } else if(foodAmount <= 0){
         foodPosition.set(random(width), random(height));
-        foodAmount = -100;
+        foodAmount = -random(200);
 
       }
 
