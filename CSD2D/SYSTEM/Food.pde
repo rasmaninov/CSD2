@@ -22,7 +22,9 @@ class Food {
 
   }
 
-
+  float foodAmount(){
+    return foodAmount;
+  }
 
 
   void update(boolean hit, float player){
@@ -37,7 +39,7 @@ class Food {
           health2 = ent2.life(1);
         }
       } else if(foodAmount <= 0){
-        foodPosition.set(random(400), random(400));
+        foodPosition.set(random(width), random(height));
         foodAmount = -100;
 
       }

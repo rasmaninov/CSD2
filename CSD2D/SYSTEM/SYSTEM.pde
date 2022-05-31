@@ -8,7 +8,7 @@ PVector[] flowField;
 int scale = 20;
 int cols;
 int rows;
-boolean Testflow = true;
+boolean Testflow = false;
 
 PVector positionZero = new PVector(0,0);
 PVector positionOne = new PVector(0, 0);
@@ -47,13 +47,13 @@ PVector displace;
 boolean hit = false;
 float health1, health2;
 PVector mousePosition = new PVector(0,0);
-float x, y;
+float x1, y1, x2, y2;
 Food food = new Food(200, 200, r3);
 
 
 
 void setup(){
- size(400, 400);
+ size(800,800);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -79,28 +79,45 @@ void draw(){
   // food.update();
   mousePosition = food.display();
 
-  float dx = mousePosition.x - positionOne.x;
-  float dy = mousePosition.y - positionOne.y;
-  float angle1 = atan2(dy, dx);
-  PVector foodPosition = PVector.fromAngle(angle1);
+  float dx1 =  mousePosition.x -positionOne.x;
+  float dy1 = mousePosition.y - positionOne.y;
+  float angle1 = atan2(dy1, dx1);
 
-  x = mousePosition.x - cos(angle1) * 80;
-  y = mousePosition.y - sin(angle1) * 80;
+  float dx2 = mousePosition.x - positionTwo.x ;
+  float dy2 = mousePosition.y - positionTwo.y ;
+  float angle2 = atan2(dy2, dx2);
+  PVector foodPosition1 = PVector.fromAngle(angle1);
+  PVector foodPosition2 = PVector.fromAngle(angle2);
 
   //numbers at the end specify which entity
+
+  x1 = mousePosition.x - cos(angle1) * 80;
+  y1 = mousePosition.y - sin(angle1) * 80;
   food.update(food.collisionDetection(mousePosition.x, mousePosition.y, positionOne.x ,positionOne.y,  r1), 1);
+  if(Testflow == true){
+    push();
+    translate(x1,y1);
+    rotate(angle1);
+    strokeWeight(5);
+    stroke(255);
+    line(0,0,80,0);
+    pop();
+  }
+
+
+
+  x2 = mousePosition.x - cos(angle2) * 80;
+  y2 = mousePosition.y - sin(angle2) * 80;
   food.update(food.collisionDetection(mousePosition.x, mousePosition.y, positionTwo.x ,positionTwo.y,  r2), 2);
-
-
-
-  // food.collisionDetection();
-  // push();
-  // translate(x,y);
-  // rotate(angle1);
-  // strokeWeight(20);
-  // stroke(255);
-  // line(0,0,80,0);
-  // pop();
+  if(Testflow == true){
+    push();
+    translate(x2,y2);
+    rotate(angle2);
+    strokeWeight(5);
+    stroke(255);
+    line(0,0,80,0);
+    pop();
+  }
 
 
   yoff = 0;
@@ -135,6 +152,10 @@ void draw(){
       //check if it should draw entity, then draw and update
       //positions
       v.setMag(1.3);
+      if(food.foodAmount >= 150){
+        v = foodPosition1;
+        v.setMag(1.5);
+      }
       if(hit){
         v.add(displace);
         v.setMag(2);
@@ -153,6 +174,10 @@ void draw(){
       displace = ent2.collide(r1, r2, displace);
 
       v.setMag(0.7);
+      if(food.foodAmount >= 150){
+        v = foodPosition2;
+        v.setMag(1);
+      }
       if(hit){
         v.add(displace);
         v.setMag(2);
