@@ -25,7 +25,11 @@ class Entity {
     } else {
        checked = false;
     }
+    if(life >= 512){
+      life = 512;
+    }
     return checked;
+
   }
 
   PVector display(PVector s, float kleur, PVector posNew, float size){
@@ -38,7 +42,7 @@ class Entity {
         armor = 255;
       }
     }
-    stroke(255, 255 - armor, 255 - armor, 200);
+    stroke(255, 255 - armor, 255 - armor, armor);
     strokeWeight(5);
     tempPos.add(s);
 

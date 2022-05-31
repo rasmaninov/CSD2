@@ -154,7 +154,7 @@ void draw(){
       v.setMag(1.3);
       if(food.foodAmount >= 150){
         v.add(foodPosition1);
-        v.setMag(1.2);
+        v.setMag(1.4);
       }
       if(hit){
         v.add(displace);
@@ -173,10 +173,10 @@ void draw(){
 
       displace = ent2.collide(r1, r2, displace);
 
-      v.setMag(0.7);
+      v.setMag(0.6);
       if(food.foodAmount >= 150){
         v.add(foodPosition2);
-        v.setMag(0.8);
+        v.setMag(0.7);
       }
       if(hit){
         v.add(displace);

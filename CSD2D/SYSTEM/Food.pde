@@ -44,7 +44,7 @@ class Food {
       }
 
     } else {
-      foodAmount += 0.1;
+      foodAmount += 0.3;
     }
     if(foodAmount >= 255){
       foodAmount = 255;
