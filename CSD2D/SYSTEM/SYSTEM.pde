@@ -55,7 +55,7 @@ int window = 800;
 
 void setup(){
 
-  size(800, 800, P2D);
+  size(1000, 1000, P2D);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -79,7 +79,7 @@ void setup(){
 void draw(){
   // background(0);
   fill(0, 15);
-  rect(0,0,800,800);
+  rect(0,0,width,height);
   // food.update();
   mousePosition = food.display();
 
@@ -195,6 +195,7 @@ void draw(){
         v.setMag(2);
       } else if(food.foodAmount >= 150){
         v.add(foodPosition1);
+        v.add(foodPosition1);
         v.setMag(1.4);
       }
       if(hit){
@@ -220,7 +221,7 @@ void draw(){
         v = ent1ToEnt2;
         v.setMag(2);
 
-      } else if(food.foodAmount >= 150){
+      }else if(food.foodAmount >= 150){
         v.add(foodPosition2);
         v.setMag(0.7);
       }

@@ -12,7 +12,7 @@ class Food {
 
   boolean collisionDetection(float xA, float yA, float xB, float yB, float r2){
     d = dist(xA, yA, xB, yB);
-    if(d <= r+r2){
+    if(d <= foodAmount/5+r2){
       hit = true;
     } else {
       hit = false;
@@ -44,7 +44,7 @@ class Food {
       }
 
     } else {
-      foodAmount += 0.2;
+      foodAmount += 0.1;
     }
     if(foodAmount >= 255){
       foodAmount = 255;
@@ -62,7 +62,7 @@ class Food {
     stroke(20);
     fill(shade, shade, 0 , 100);
 
-    ellipse(foodPosition.x, foodPosition.y, r * 2, r * 2);
+    ellipse(foodPosition.x, foodPosition.y, foodAmount/5, foodAmount/5);
     return foodPosition;
   }
 
