@@ -8,7 +8,7 @@ PVector[] flowField;
 int scale = 20;
 int cols;
 int rows;
-boolean Testflow = true;
+boolean Testflow = false;
 
 PVector positionZero = new PVector(0,0);
 PVector positionOne = new PVector(0, 0);
@@ -49,11 +49,12 @@ float health1, health2;
 PVector mousePosition = new PVector(0,0);
 float x1, y1, x2, y2;
 Food food = new Food(200, 200, r3);
+boolean anger1, anger2;
 
 
 
 void setup(){
- size(400,400);
+ size(800, 800);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -166,6 +167,7 @@ void draw(){
       }
       if(ent1.lifeCheck(health1 )){
         if(ent1.check(positionOne,x, y, checked)){
+          anger1 = ent1.angered();
             positionOne = ent1.display(v, color1, pos, r1*2); // vector, color, new position(returned), size
         }
       }
@@ -188,6 +190,7 @@ void draw(){
       }
       if(ent2.lifeCheck(health2)){
         if(ent2.check(positionTwo, x, y, checked)){
+          anger2 = ent2.angered();
           positionTwo = ent2.display(v, color2, pos2, r2*2);
         }
       }

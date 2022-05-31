@@ -9,8 +9,9 @@ class Entity {
   PVector displace;
   float d;
   PVector v;
-  float life = 255;
+  float life = 0;
   float armor = 0;
+  boolean angered = false;
 
   Entity(PVector spawn){
     tempPos = spawn;
@@ -27,11 +28,15 @@ class Entity {
     }
     if(life >= 512){
       life = 512;
+      angered = true;
     }
     return checked;
 
   }
 
+  boolean angered(){
+    return angered;
+  }
   PVector display(PVector s, float kleur, PVector posNew, float size){
     posNew = new PVector(0,0);
     float r = size/2 + 5; // r = radius + strokeweight = radius
