@@ -59,6 +59,7 @@ class Food {
       shade = foodAmount;
     }
     strokeWeight(0);
+    stroke(20);
     fill(shade, shade, 0 , 100);
 
     ellipse(foodPosition.x, foodPosition.y, r * 2, r * 2);

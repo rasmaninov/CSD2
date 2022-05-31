@@ -55,7 +55,7 @@ int window = 800;
 
 void setup(){
 
-  size(800, 800);
+  size(800, 800, P2D);
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
@@ -77,7 +77,9 @@ void setup(){
 
 
 void draw(){
-  background(0);
+  // background(0);
+  fill(0, 15);
+  rect(0,0,800,800);
   // food.update();
   mousePosition = food.display();
 
@@ -189,16 +191,8 @@ void draw(){
       //positions
       v.setMag(1.3);
       if(anger1 == true){
-        // println("enraged p1");
         v = ent2ToEnt1;
         v.setMag(2);
-        // if(ent1.life(0) <= 50 || ent2.life(0) <= 0){
-        //   anger1 = false;
-        //   anger2 = false;
-        //   println("rage over");
-        //
-        //
-        // }
       } else if(food.foodAmount >= 150){
         v.add(foodPosition1);
         v.setMag(1.4);
@@ -223,16 +217,9 @@ void draw(){
 
       v.setMag(0.6);
       if(anger2 == true){
-        // println("enraged p2");
         v = ent1ToEnt2;
         v.setMag(2);
-        // if(ent2.life(0) <= 50 || ent1.life(0) <= 0){
-        //   anger2 = false;
-        //   anger1 = false;
-        //   println("rage over");
-        //
-        //
-        // }
+
       } else if(food.foodAmount >= 150){
         v.add(foodPosition2);
         v.setMag(0.7);
@@ -262,8 +249,16 @@ void draw(){
 
 
   if(hit){
-    health2 = ent2.life(-random(5));
-    health1 = ent1.life(-random(5));
+      if(anger2){
+      health1 = ent1.life(-random(7));
+      health2 = ent2.life(-random(5));
+    } else if(anger1){
+      health2 = ent2.life(-random(7));
+      health1 = ent1.life(-random(5));
+    } else {
+      health2 = ent2.life(-random(5));
+      health1 = ent1.life(-random(5));
+    }
   }
 
 
