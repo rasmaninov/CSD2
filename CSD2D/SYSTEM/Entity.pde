@@ -45,7 +45,7 @@ class Entity {
   PVector display(PVector s, float kleur, PVector posNew, float size){
     posNew = new PVector(0,0);
     float r = size/2 + 5; // r = radius + strokeweight = radius
-    fill(kleur);
+    fill(kleur, 50);
     if(life > 255){
       armor = life - 255;
       if(armor > 255){
@@ -57,14 +57,22 @@ class Entity {
     tempPos.add(s);
 
     ellipse(tempPos.x, tempPos.y, size, size);
+    fill(200);
+    stroke(0);
+    strokeWeight(2);
+
+    ellipse(tempPos.x, tempPos.y, size/3, size/3);
+    strokeWeight(0);
+    fill(0);
+    ellipse(tempPos.x, tempPos.y, 15, 15);
     // checking if between bounds, update this function!!!!
     if(tempPos.x >= width - r){
       tempPos.x = (width - r);
     } else if(tempPos.x <= r){
       tempPos.x = r ;
     }
-    if(tempPos.y >= width-r){
-      tempPos.y = width-r;
+    if(tempPos.y >= height-r){
+      tempPos.y = height-r;
     } else if(tempPos.y <= r){
       tempPos.y = r;
     }

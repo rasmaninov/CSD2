@@ -1,7 +1,8 @@
 // processing-java --sketch=/Users/rahsaan/Documents/CSD2/CSD2D/SYSTEM  --run
-// todo : seeding food
 // todo ; body building
 // todo ; sound????
+// todo ; wat is eigenlijk dit
+
 
 // dividing screen into sections
 PVector[] flowField;
@@ -14,6 +15,9 @@ PVector positionZero = new PVector(0,0);
 PVector positionOne = new PVector(0, 0);
 PVector spawnPosOne = new PVector(700, 500);
 
+PVector v1 = new PVector(0,0);
+PVector v2 = new PVector(0,0);
+
 PVector positionTwo = new PVector(0, 0);
 PVector spawnPosTwo = new PVector(250, 250);
 
@@ -25,14 +29,12 @@ float increment = 0.01;
 
 Entity  ent1 = new Entity(spawnPosOne);
 Entity  ent2 = new Entity(spawnPosTwo);
-// float foodstartx = 200;
-// float foodstarty = 350;
 
 float color1 = 255;
 float color2 = 255;
 
-int state1 = 0;
-int state2 = 0;
+int state1 = 1;
+int state2 = 1;
 
 
 PVector pos = new PVector(0,0);
@@ -40,8 +42,8 @@ PVector pos2 = new PVector(0,0);
 
 boolean checked;
 
-float r1 = 40;
-float r2 = 60;
+float r1 = 30;
+float r2 = 50;
 float r3 = 25;
 PVector displace;
 boolean hit = false;
@@ -59,7 +61,7 @@ void setup(){
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
- surface.setLocation(1500,400);
+ surface.setLocation(-700,-1300);
 
  cols = floor(width / scale);
  rows = floor(height / scale);
@@ -78,7 +80,7 @@ void setup(){
 
 void draw(){
   // background(0);
-  fill(0, 15);
+  fill(0, 20);
   rect(0,0,width,height);
   // food.update();
   mousePosition = food.display();
@@ -117,6 +119,7 @@ void draw(){
   PVector ent2ToEnt1 = PVector.fromAngle(angle4);
   x4 = positionTwo.x - cos(angle4) * 80;
   y4 = positionTwo.y - sin(angle4) * 80;
+
   if(Testflow == true){
     push();
     translate(x4, y4);
@@ -167,7 +170,7 @@ void draw(){
       float angle = noise(xoff, yoff, zoff) * TWO_PI * 4;
       PVector v = PVector.fromAngle(angle);
       flowField[index] = v;
-      v.setMag(1);
+      v.setMag(0.7);
       xoff += increment;
 
       // drawing all vector angles
@@ -184,50 +187,64 @@ void draw(){
 
 
 
+
+
       hit = ent1.collisionDetection(positionOne.x, positionOne.y, positionTwo.x, positionTwo.y);
       displace = ent1.collide(r1, r2, displace);
 
-      //check if it should draw entity, then draw and update
-      //positions
-      v.setMag(1.3);
-      if(anger1 == true){
-        v = ent2ToEnt1;
-        v.setMag(2);
-      } else if(food.foodAmount >= 150){
-        v.add(foodPosition1);
-        v.add(foodPosition1);
-        v.setMag(1.4);
-      }
       if(hit){
         v.add(displace);
         v.setMag(2);
       }
+      v1 = v;
+      v2 = v;
+
+
+      //check if it should draw entity, then draw and update
+      //positions
+      v1.setMag(1.3);
+      if(anger1 == true){
+        v1 = ent2ToEnt1;
+        v.setMag(2);
+      } else if(food.foodAmount >= 250 || health1 > 170 && food.foodAmount() > 100){
+        v1.add(foodPosition1);
+        v1.add(foodPosition1);
+        v.setMag(1.4);
+      }
+
+
+
       color1 = health1;
       if(color1 >= 255){
         color1 = 255;
       }
+
+
       if(ent1.lifeCheck(health1 )){
         if(ent1.check(positionOne,x, y, checked)){
           anger1 = ent1.angered();
-            positionOne = ent1.display(v, color1, pos, r1*2); // vector, color, new position(returned), size
+
+          positionOne = ent1.display(v1, color1, pos, r1*2); // vector, color, new position(returned), size
         }
       }
          // vector, color, new position(returned), size
 
       displace = ent2.collide(r1, r2, displace);
 
-      v.setMag(0.6);
+      v2.setMag(0.6);
       if(anger2 == true){
-        v = ent1ToEnt2;
-        v.setMag(2);
+        v2 = ent1ToEnt2;
+        v2.setMag(2);
 
-      }else if(food.foodAmount >= 150){
-        v.add(foodPosition2);
-        v.setMag(0.7);
+      }else if(food.foodAmount >= 200 || health2 < 150 && food.foodAmount() > 100){
+        v2.add(foodPosition2);
+        v2.setMag(0.7);
       }
+
+
       if(hit){
-        v.add(displace);
-        v.setMag(2);
+        v2.add(displace);
+        v2.setMag(2);
       }
       color2 = health2;
       if(color2 >= 255){
@@ -236,7 +253,7 @@ void draw(){
       if(ent2.lifeCheck(health2)){
         if(ent2.check(positionTwo, x, y, checked)){
           anger2 = ent2.angered();
-          positionTwo = ent2.display(v, color2, pos2, r2*2);
+          positionTwo = ent2.display(v2, color2, pos2, r2*2);
         }
       }
        // vector, color, new position(returned), size
@@ -273,7 +290,7 @@ void draw(){
 
   } else if (ent1.lifeCheck(health1) == false){
     positionOne.set(-400, -400);
-  } else if (ent1.life(0) < 255){
+  } else if (ent1.life(0) < 510){
     if (state1 == 1){
       if(health1 < 250){
         health1 = ent1.life(3);
@@ -283,7 +300,7 @@ void draw(){
         health1 = ent1.life(2);
       }
     } else {
-      health1 = ent1.life(2);
+      health1 = ent1.life(-random(0.05));
     }
 
   }
@@ -299,7 +316,7 @@ void draw(){
 
   } else if (ent2.lifeCheck(health2) == false){
     positionTwo.set(-200, -200);
-  } else if (ent2.life(0) < 255) {
+  } else if (ent2.life(0) < 510) {
     if (state2 == 1){
       if(health2 < 250){
         health2 = ent2.life(3);
@@ -309,7 +326,7 @@ void draw(){
         health2 = ent2.life(2);
       }
     } else {
-        health2 = ent2.life(2);
+        health2 = ent2.life(-random(0.05));
     }
 
   }
@@ -317,4 +334,5 @@ void draw(){
   //
   println(health1, "p1 hp");
   println(health2, "p2 hp");
+  println(food.foodAmount(), "food");
 }

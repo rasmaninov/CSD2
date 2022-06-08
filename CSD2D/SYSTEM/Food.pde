@@ -44,7 +44,7 @@ class Food {
       }
 
     } else {
-      foodAmount += 0.1;
+      foodAmount += 0.05;
     }
     if(foodAmount >= 255){
       foodAmount = 255;
@@ -60,7 +60,7 @@ class Food {
     }
     strokeWeight(0);
     stroke(20);
-    fill(shade, shade, 0 , 100);
+    fill(shade, shade, 0 , shade * 2);
 
     ellipse(foodPosition.x, foodPosition.y, foodAmount/5, foodAmount/5);
     return foodPosition;
