@@ -45,21 +45,23 @@ class Entity {
   PVector display(PVector s, float kleur, PVector posNew, float size){
     posNew = new PVector(0,0);
     float r = size/2 + 5; // r = radius + strokeweight = radius
-    fill(kleur, 50);
     if(life > 255){
       armor = life - 255;
       if(armor > 255){
         armor = 255;
       }
     }
+    fill(kleur+50, 50);
+    ellipse(tempPos.x, tempPos.y, size + 15, size + 15);
+    fill(kleur, 50);
     stroke(255, 255 - armor, 255 - armor, armor);
-    strokeWeight(5);
+    strokeWeight(6);
     tempPos.add(s);
 
     ellipse(tempPos.x, tempPos.y, size, size);
     fill(200);
     stroke(0);
-    strokeWeight(2);
+    strokeWeight(3);
 
     ellipse(tempPos.x, tempPos.y, size/3, size/3);
     strokeWeight(0);
