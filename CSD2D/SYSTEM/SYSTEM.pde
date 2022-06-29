@@ -25,7 +25,7 @@ PVector spawnPosTwo = new PVector(250, 250);
 float xoff = 0;
 float yoff = 0;
 float zoff = 0;
-float increment = 0.01;
+float increment = 0.005;
 
 Entity  ent1 = new Entity(spawnPosOne);
 Entity  ent2 = new Entity(spawnPosTwo);
@@ -36,6 +36,7 @@ float color2 = 255;
 int state1 = 1;
 int state2 = 1;
 
+int filter = 1;
 
 PVector pos = new PVector(0,0);
 PVector pos2 = new PVector(0,0);
@@ -53,15 +54,17 @@ float x1, y1, x2, y2, x3, y3, x4, y4;
 Food food = new Food(200, 200, r3);
 boolean anger1, anger2;
 int window = 800;
-
+PShader blur;
 
 void setup(){
 
-  size(1000, 1000, P2D);
+  size(750, 750, P2D);
+  blur = loadShader("blur.glsl");
+
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
- surface.setLocation(-700,-1300);
+ surface.setLocation(200,200);
 
  cols = floor(width / scale);
  rows = floor(height / scale);
@@ -79,6 +82,8 @@ void setup(){
 
 
 void draw(){
+
+  filter(blur);
   // background(0);
   fill(0, 20);
   rect(0,0,width,height);
@@ -184,11 +189,6 @@ void draw(){
         pop();
       }
 
-
-
-
-
-
       hit = ent1.collisionDetection(positionOne.x, positionOne.y, positionTwo.x, positionTwo.y);
       displace = ent1.collide(r1, r2, displace);
 
@@ -211,8 +211,6 @@ void draw(){
         v1.add(foodPosition1);
         v.setMag(1.4);
       }
-
-
 
       color1 = health1;
       if(color1 >= 255){
@@ -261,7 +259,7 @@ void draw(){
     }
 
       yoff += increment;
-      zoff += 0.00007;
+      zoff += 0.000007;
 
   }
 
@@ -332,7 +330,7 @@ void draw(){
   }
 
   //
-  println(health1, "p1 hp");
-  println(health2, "p2 hp");
+  // println(health1, "p1 hp");
+  // println(health2, "p2 hp");
   println(food.foodAmount(), "food");
 }

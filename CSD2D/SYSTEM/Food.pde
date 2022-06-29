@@ -4,6 +4,7 @@ class Food {
   float shade;
   float d;
   float r;
+  boolean growth = true;
 
   Food(float x, float y, float r){
     foodPosition.set(x, y);
@@ -29,7 +30,7 @@ class Food {
 
   void update(boolean hit, float player){
     if(hit){
-
+      growth = false;
       if(foodAmount > 0){
         foodAmount -= 1;
         if(player == 1){
@@ -40,14 +41,27 @@ class Food {
       } else if(foodAmount <= 0){
         foodPosition.set(random(width), random(height));
         foodAmount = -random(200);
+        growth = true;
 
       }
 
     } else {
-      foodAmount += 0.05;
+      if(growth){
+        foodAmount += 0.05;
+
+      } else {
+        foodAmount -= 0.05;
+        if(foodAmount <= 0){
+          foodPosition.set(random(width), random(height));
+          foodAmount = -random(200);
+          growth = true;
+          println("reaspamn food");
+        }
+      }
     }
     if(foodAmount >= 255){
-      foodAmount = 255;
+    growth = false;
+    println("grow stop bro");
     }
     // println(foodAmount + "foodAmount");
   }
