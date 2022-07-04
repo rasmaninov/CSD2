@@ -7,3 +7,5 @@ inspiratie contains inspiration
 shader is basically voronoi diagram, i tried to recreate voorbeeld.png but not quite there yet
 
 shaders contains test with not my own shaders, .glsl files pulled from processing examples
+
+SYSTEM is the big project, to run program open ("SYSTEM") in processing IDE
