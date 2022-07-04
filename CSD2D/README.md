@@ -2,7 +2,7 @@ AUTOMATON
 SYSTEM contains code for Big project
 shader/shaders contain smaller experiments
 presentatie&slides contains things connected to the final presentation
-inspiratie contains inspiration
+inspiratie contains inspiration&tests
 
 shader is basically voronoi diagram, i tried to recreate voorbeeld.png but not quite there yet
 
