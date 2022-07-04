@@ -1,15 +1,17 @@
 // processing-java --sketch=/Users/rahsaan/Documents/CSD2/CSD2D/SYSTEM  --run
-// todo ; body building
-// todo ; sound????
-// todo ; wat is eigenlijk dit
+// dit is de command voor mijzelf om af te spelen
+// voor iedereen else heb ik voor de makkelijk een processing file die je in de
+// processing IDE kan gooien gedaan
 
+
+//if true, visualizes everything
+boolean Testflow = false;
 
 // dividing screen into sections
 PVector[] flowField;
 int scale = 20;
 int cols;
 int rows;
-boolean Testflow = false;
 
 PVector positionZero = new PVector(0,0);
 PVector positionOne = new PVector(0, 0);
@@ -49,65 +51,66 @@ float r3 = 25;
 PVector displace;
 boolean hit = false;
 float health1, health2;
-PVector mousePosition = new PVector(0,0);
+PVector foodPosition = new PVector(0,0);
 float x1, y1, x2, y2, x3, y3, x4, y4;
-Food food = new Food(200, 200, r3);
+Food food = new Food(200, 200);
 boolean anger1, anger2;
 int window = 800;
 PShader blur;
 
 void setup(){
 
-  size(750, 750, P2D);
+  size(750, 750, P2D); //setting size and renderer
   blur = loadShader("blur.glsl");
 
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
  surface.setLocation(200,200);
-
- cols = floor(width / scale);
- rows = floor(height / scale);
-
- flowField = new PVector[cols * rows];
-
- health1 = ent1.life(0);
- health2 = ent2.life(0);
-
  frameRate(60);
  background(0);
- println("go");
+ //dividing canvas into blocks for flowfield and prepping flowfield PVector array
+ cols = floor(width / scale);
+ rows = floor(height / scale);
+ flowField = new PVector[cols * rows];
+
+ //initializing health1 and health2
+ health1 = ent1.life(0);
+ health2 = ent2.life(0);
 }
 
 
 
 void draw(){
 
-  filter(blur);
-  // background(0);
+  filter(blur); //shader for Esthetics
+  //overlaying a rectangle to create a trail of entity drawings
   fill(0, 20);
   rect(0,0,width,height);
-  // food.update();
-  mousePosition = food.display();
+
+  //displaying food
+  foodPosition = food.display();
 
 
-  // entity one to food vector
-  float dx1 = mousePosition.x - positionOne.x;
-  float dy1 = mousePosition.y - positionOne.y;
+  // calculating entity one to food vector
+  float dx1 = foodPosition.x - positionOne.x;
+  float dy1 = foodPosition.y - positionOne.y;
   float angle1 = atan2(dy1, dx1);
   PVector foodPosition1 = PVector.fromAngle(angle1);
-  // entity two to food vector
-  float dx2 = mousePosition.x - positionTwo.x ;
-  float dy2 = mousePosition.y - positionTwo.y ;
+  // calculating entity two to food vector
+  float dx2 = foodPosition.x - positionTwo.x ;
+  float dy2 = foodPosition.y - positionTwo.y ;
   float angle2 = atan2(dy2, dx2);
   PVector foodPosition2 = PVector.fromAngle(angle2);
-  //ent1 to ent2
+  //calculatin ent1 to ent2 vector
   float dx3 = positionOne.x - positionTwo.x;
   float dy3 = positionOne.y - positionTwo.y;
   float angle3= atan2(dy3, dx3);
   PVector ent1ToEnt2 = PVector.fromAngle(angle3);
   x3 = positionOne.x - cos(angle3) * 80;
   y3 = positionOne.y - sin(angle3) * 80;
+
+  //drawing ent1toent2 vector
   if(Testflow == true){
     push();
     translate(x3,y3);
@@ -117,7 +120,7 @@ void draw(){
     line(0,0,80,0);
     pop();
   }
-  //ent2 to ent1
+  //calculatin ent2 to ent1 vector
   float dx4 = positionTwo.x - positionOne.x;
   float dy4 = positionTwo.y - positionOne.y;
   float angle4= atan2(dy4, dx4);
@@ -125,6 +128,7 @@ void draw(){
   x4 = positionTwo.x - cos(angle4) * 80;
   y4 = positionTwo.y - sin(angle4) * 80;
 
+  //drawing ent2toent1 vector
   if(Testflow == true){
     push();
     translate(x4, y4);
@@ -136,10 +140,9 @@ void draw(){
   }
 
   //numbers at the end specify which entity
-
-  x1 = mousePosition.x - cos(angle1) * 80;
-  y1 = mousePosition.y - sin(angle1) * 80;
-  food.update(food.collisionDetection(mousePosition.x, mousePosition.y, positionOne.x ,positionOne.y,  r1), 1);
+  // calculating and drawing ent1tofoodvector
+  x1 = foodPosition.x - cos(angle1) * 80;
+  y1 = foodPosition.y - sin(angle1) * 80;
   if(Testflow == true){
     push();
     translate(x1,y1);
@@ -149,12 +152,12 @@ void draw(){
     line(0,0,80,0);
     pop();
   }
+  food.update(food.collisionDetection(foodPosition.x, foodPosition.y, positionOne.x ,positionOne.y,  r1), 1);
 
 
-
-  x2 = mousePosition.x - cos(angle2) * 80;
-  y2 = mousePosition.y - sin(angle2) * 80;
-  food.update(food.collisionDetection(mousePosition.x, mousePosition.y, positionTwo.x ,positionTwo.y,  r2), 2);
+  // calculating and drawing ent2tofoodvector
+  x2 = foodPosition.x - cos(angle2) * 80;
+  y2 = foodPosition.y - sin(angle2) * 80;
   if(Testflow == true){
     push();
     translate(x2,y2);
@@ -164,6 +167,7 @@ void draw(){
     line(0,0,80,0);
     pop();
   }
+  food.update(food.collisionDetection(foodPosition.x, foodPosition.y, positionTwo.x ,positionTwo.y,  r2), 2);
 
 
   yoff = 0;
@@ -178,7 +182,7 @@ void draw(){
       v.setMag(0.7);
       xoff += increment;
 
-      // drawing all vector angles
+      // drawing all vector (angles)
       if(Testflow == true){
         stroke(255,70);
         push();
@@ -225,7 +229,6 @@ void draw(){
           positionOne = ent1.display(v1, color1, pos, r1*2); // vector, color, new position(returned), size
         }
       }
-         // vector, color, new position(returned), size
 
       displace = ent2.collide(r1, r2, displace);
 
@@ -254,7 +257,6 @@ void draw(){
           positionTwo = ent2.display(v2, color2, pos2, r2*2);
         }
       }
-       // vector, color, new position(returned), size
 
     }
 
@@ -329,8 +331,4 @@ void draw(){
 
   }
 
-  //
-  // println(health1, "p1 hp");
-  // println(health2, "p2 hp");
-  println(food.foodAmount(), "food");
 }

@@ -1,3 +1,5 @@
+//deze shader heb ik niet zelf geschreven, maar uit de examples van processing getrokken
+
 #ifdef GL_ES
 precision mediump float;
 precision mediump int;
