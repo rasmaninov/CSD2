@@ -5,7 +5,7 @@
 
 
 //if true, visualizes everything
-boolean Testflow = false;
+boolean Testflow = true;
 
 // dividing screen into sections
 PVector[] flowField;
@@ -60,13 +60,13 @@ PShader blur;
 
 void setup(){
 
-  size(750, 750, P2D); //setting size and renderer
+  size(1000, 1000, P2D); //setting size and renderer
   blur = loadShader("blur.glsl");
 
 //initializing system and several values
  surface.setTitle("SYSTEM");
  surface.setResizable(true);
- surface.setLocation(200,200);
+ surface.setLocation(-700,-1100);
  frameRate(60);
  background(0);
  //dividing canvas into blocks for flowfield and prepping flowfield PVector array
@@ -152,6 +152,7 @@ void draw(){
     line(0,0,80,0);
     pop();
   }
+  //updating the foodamount and state based on collisiondetect
   food.update(food.collisionDetection(foodPosition.x, foodPosition.y, positionOne.x ,positionOne.y,  r1), 1);
 
 
@@ -167,11 +168,12 @@ void draw(){
     line(0,0,80,0);
     pop();
   }
+  //updating the foodamount and state based on collisiondetect
   food.update(food.collisionDetection(foodPosition.x, foodPosition.y, positionTwo.x ,positionTwo.y,  r2), 2);
 
-
+  //initializing flowfield drawing
   yoff = 0;
-  // updating vector angles by noise offsets
+  // updating vector angles by noise offsets and drawing flowfield
   for(int y = 0; y < rows; y++){
     xoff = 0;
     for(int x = 0; x < cols; x++){
@@ -192,14 +194,17 @@ void draw(){
         line (0,0,scale,0);
         pop();
       }
-
+      //checking if entities collide
       hit = ent1.collisionDetection(positionOne.x, positionOne.y, positionTwo.x, positionTwo.y);
+      //if touching, calculate entity displacement
       displace = ent1.collide(r1, r2, displace);
 
+      //whats happens if the hit each other
       if(hit){
-        v.add(displace);
+        v.add(displace); //adding displacement to current movement vector
         v.setMag(2);
       }
+      //splitting displacent for ent1 and ent2
       v1 = v;
       v2 = v;
 
@@ -207,6 +212,7 @@ void draw(){
       //check if it should draw entity, then draw and update
       //positions
       v1.setMag(1.3);
+      //change Vector based on entity state
       if(anger1 == true){
         v1 = ent2ToEnt1;
         v.setMag(2);
@@ -215,24 +221,26 @@ void draw(){
         v1.add(foodPosition1);
         v.setMag(1.4);
       }
-
+      //adapt ent color based on health
       color1 = health1;
       if(color1 >= 255){
         color1 = 255;
       }
 
-
+      //if living and within bounds
       if(ent1.lifeCheck(health1 )){
         if(ent1.check(positionOne,x, y, checked)){
-          anger1 = ent1.angered();
-
+          anger1 = ent1.angered(); //updating anger based on anger
+          //updating position and displays entity
           positionOne = ent1.display(v1, color1, pos, r1*2); // vector, color, new position(returned), size
         }
       }
-
+      //if touching, calculate entity displacement
       displace = ent2.collide(r1, r2, displace);
-
+      //check if it should draw entity, then draw and update
+      //positions
       v2.setMag(0.6);
+      //change Vector based on entity state
       if(anger2 == true){
         v2 = ent1ToEnt2;
         v2.setMag(2);
@@ -244,28 +252,32 @@ void draw(){
 
 
       if(hit){
-        v2.add(displace);
+        v2.add(displace);//adding displacement to current movement vector
         v2.setMag(2);
       }
+      //adapt ent color based on health
       color2 = health2;
       if(color2 >= 255){
         color2 = 255;
       }
+      //if living and within bounds
       if(ent2.lifeCheck(health2)){
         if(ent2.check(positionTwo, x, y, checked)){
-          anger2 = ent2.angered();
-          positionTwo = ent2.display(v2, color2, pos2, r2*2);
+          anger2 = ent2.angered();//updating anger based on anger
+          //updating position and displays entity
+
+          positionTwo = ent2.display(v2, color2, pos2, r2*2);// vector, color, new position(returned), size
         }
       }
 
     }
-
+      //updating perlin noise params
       yoff += increment;
       zoff += 0.000007;
 
   }
 
-
+  //if hit, and one of entities is angry, they do more damage than the other, if both or none angry same damage
   if(hit){
       if(anger2){
       health1 = ent1.life(-random(7));
@@ -279,7 +291,7 @@ void draw(){
     }
   }
 
-
+  //respawn if dead
   if(ent1.lifeCheck(health1) == false && frameCount % 500 == 0){
     health1 = ent1.life(1);
     state1 = 1;
@@ -287,9 +299,10 @@ void draw(){
     println("p1 respawn");
 
 
-
+  //if dead and not respawn time yet, keep out of canvas
   } else if (ent1.lifeCheck(health1) == false){
     positionOne.set(-400, -400);
+    //if health is under 510, add health until hp full
   } else if (ent1.life(0) < 510){
     if (state1 == 1){
       if(health1 < 250){
@@ -299,13 +312,14 @@ void draw(){
         state1 = 0;
         health1 = ent1.life(2);
       }
+      //if hp has been full they slowly die unless they eat
     } else {
       health1 = ent1.life(-random(0.05));
     }
 
   }
 
-
+  //respawn if dead
   if(ent2.lifeCheck(health2) == false && frameCount % 500 == 150){
     health2 = ent2.life(1);
     state2 = 1;
@@ -313,9 +327,10 @@ void draw(){
     println("p2 respawn");
 
 
-
+    //if dead and not respawn time yet, keep out of canvas
   } else if (ent2.lifeCheck(health2) == false){
     positionTwo.set(-200, -200);
+    //if health is under 510, add health until hp full
   } else if (ent2.life(0) < 510) {
     if (state2 == 1){
       if(health2 < 250){
@@ -325,6 +340,7 @@ void draw(){
         state2 = 0;
         health2 = ent2.life(2);
       }
+      //if hp has been full they slowly die unless they eat
     } else {
         health2 = ent2.life(-random(0.05));
     }
